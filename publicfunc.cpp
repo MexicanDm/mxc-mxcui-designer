@@ -1,5 +1,6 @@
 #include "publicfunc.h"
 
+
 PublicFunc::PublicFunc(QWidget *parent) : QWidget(parent)
 {
 
