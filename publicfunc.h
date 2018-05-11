@@ -11,6 +11,16 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
+#define CIRCLE_PROCESS_BAR "CircleProgressBar"
+
+typedef struct{
+    QString fileName;
+    QString structName;
+    QString structType;
+    QString colorName;
+    QTreeWidgetItem item;
+}SearchType;
+
 class BaseComonentProperty{
 public:
     BaseComonentProperty():x(0),y(0),width(0),height(0),layer(0),fontSize(0),type(""),name(""),
@@ -23,6 +33,11 @@ public:
         if(iter != compObj.end())
         {
             name = iter.value().toString();
+        }
+        iter = compObj.find("type");
+        if(iter != compObj.end())
+        {
+            type = iter.value().toString();
         }
         iter = compObj.find("x");
         if(iter != compObj.end())
@@ -93,6 +108,11 @@ public:
         bigChildItem = new QTreeWidgetItem(fatherItem,QStringList(QString(name)));
         QVector<QStringList> vStrList;
         QStringList list;
+
+        list << "type" << type;
+        vStrList.append(list);
+        list.clear();
+
         list << "x" << QString("%1").arg(x);
         vStrList.append(list);
         list.clear();
@@ -130,7 +150,7 @@ public:
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
 
-        list << "fontcolor";
+        list << "fontColor";
         QTreeWidgetItem *itemColor = new QTreeWidgetItem(bigChildItem,list);
         list.clear();
         vStrList.clear();
@@ -148,6 +168,60 @@ public:
         for(int k = 0;k < vStrList.count();k++)
         {
             new QTreeWidgetItem(itemColor,vStrList[k]);
+        }
+    }
+
+    virtual void setData(const SearchType &st)
+    {
+        QString str = st.item.text(0);
+        QString value = st.item.text(1);
+        QString cName = st.colorName;
+        if(str.compare("x") == 0)
+        {
+            x = value.toInt();
+        }
+        else if(str.compare("y") == 0)
+        {
+            y = value.toInt();
+        }
+        else if(str.compare("width") == 0)
+        {
+            width = value.toInt();
+        }
+        else if(str.compare("height") == 0)
+        {
+            height = value.toInt();
+        }
+        else if(str.compare("layer") == 0)
+        {
+            layer = value.toInt();
+        }
+        else if(str.compare("fontsize") == 0)
+        {
+            fontSize = value.toInt();
+        }
+        else if(cName.compare("fontcolor") == 0)
+        {
+            if(str.compare("R") == 0)
+            {
+                fontcolor.setRed(value.toInt());
+            }
+            else if(str.compare("G") == 0)
+            {
+                fontcolor.setGreen(value.toInt());
+            }
+            else if(str.compare("B") == 0)
+            {
+                fontcolor.setBlue(value.toInt());
+            }
+        }
+        else if(str.compare("res_active") == 0)
+        {
+            resActive = value;
+        }
+        else if(str.compare("res_inactive") == 0)
+        {
+            resinActive = value;
         }
     }
 
@@ -309,6 +383,61 @@ public:
         }
     }
 
+    void setData(const SearchType &st)
+    {
+        BaseComonentProperty::setData(st);
+        QString str = st.item.text(0);
+        QString value = st.item.text(1);
+        QString cName = st.colorName;
+        if(str.compare("penWidth") == 0)
+        {
+            penWidth = value.toInt();
+
+        }
+        else if(str.compare("minValue") == 0)
+        {
+            minValue = value.toInt();
+        }
+        else if(str.compare("maxValue") == 0)
+        {
+            maxValue = value.toInt();
+        }
+        else if(str.compare("currentValue") == 0)
+        {
+            currentValue = value.toInt();
+        }
+        else if(cName.compare("color") == 0)
+        {
+            if(str.compare("R") == 0)
+            {
+                color.setRed(value.toInt());
+            }
+            else if(str.compare("G") == 0)
+            {
+                color.setGreen(value.toInt());
+            }
+            else if(str.compare("B") == 0)
+            {
+                color.setBlue(value.toInt());
+            }
+        }
+        else if(cName.compare("baseColor") == 0)
+        {
+            if(str.compare("R") == 0)
+            {
+                baseColor.setRed(value.toInt());
+            }
+            else if(str.compare("G") == 0)
+            {
+                baseColor.setGreen(value.toInt());
+            }
+            else if(str.compare("B") == 0)
+            {
+                baseColor.setBlue(value.toInt());
+            }
+        }
+
+    }
 public:
     QColor color;
     QColor baseColor;

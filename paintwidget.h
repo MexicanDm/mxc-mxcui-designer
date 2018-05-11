@@ -40,11 +40,12 @@ private:
     QVector<TextEditImage> vTEditImage;
     QVector<RectProgressBar> vRectProgressBar;
     QVector<NumberKeyboard> vNumKeyBoard;
-
+    QVector<JsonProperty> vPaintJsonPro;
 signals:
 
 public slots:
     void slotGetComProperty(QVector<JsonProperty> jsonPro);
+    void slotUpdateSta(SearchType st);
 };
 
 #endif // PAINTERWIDGET_H

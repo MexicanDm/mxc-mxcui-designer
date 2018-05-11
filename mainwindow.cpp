@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->pBtnSaveFile,SIGNAL(clicked(bool)),this,SLOT(slotSaveFile()));
     QObject::connect(this,SIGNAL(sigDisplayJsonProperty(QVector<JsonProperty>)),ui->treeWidget,SLOT(slotDisplayJsonFile(QVector<JsonProperty>)));
     QObject::connect(this,SIGNAL(sigDisplayJsonProperty(QVector<JsonProperty>)),ui->disWidget,SLOT(slotGetComProperty(QVector<JsonProperty>)));
+    QObject::connect(ui->treeWidget,SIGNAL(sigUpdateSta(SearchType)),ui->disWidget,SLOT(slotUpdateSta(SearchType)));
 }
 
 void MainWindow::slotOpenFile()

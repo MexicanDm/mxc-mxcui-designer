@@ -31,7 +31,7 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                 if(iter != compObj.end())
                 {
                     QString tmp = iter.value().toString();
-                    if(tmp.compare("CircleProgressBar") == 0)
+                    if(tmp.compare(CIRCLE_PROCESS_BAR) == 0)
                     {
                         CircleProBarProperty tmpCircle;
                         tmpCircle.parseJsonData(component);
@@ -43,8 +43,6 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                         tmpCheck.parseJsonData(component);
                         jsonPro.vCheckBox.append(tmpCheck);
                     }
-                    else
-                        return false;
                 }
             }
         }
