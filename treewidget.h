@@ -15,12 +15,13 @@ public:
     explicit TreeWidget(QWidget *parent = 0);
 private:
     QTreeWidgetItem *lastOpen;
-    QVector<JsonProperty> vTreeJsonPro;
+
 
 signals:
     void sigUpdateSta(SearchType sType);
+    void sigDisplayJsonProperty();
 public slots:
-    void slotDisplayJsonFile(QVector<JsonProperty> vJsonPro);
+    void slotDisplayJsonFile();
     void slotOpenPersistentEditor(QTreeWidgetItem* item,int column);
     void slotSelectionChanged(QTreeWidgetItem* changedItem,int column);
 };

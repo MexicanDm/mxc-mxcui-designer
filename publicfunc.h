@@ -1,6 +1,28 @@
 #ifndef PUBLICFUNC_H
 #define PUBLICFUNC_H
 
+#include "../mxc-mxcui/MXCUI/ui/circleprogressbar.h"
+#include "../mxc-mxcui/MXCUI/ui/imagelabel.h"
+#include "../mxc-mxcui/MXCUI/ui/roundrectprogressbar.h"
+#include "../mxc-mxcui/MXCUI/ui/textlabel.h"
+#include "../mxc-mxcui/MXCUI/ui/imagebutton.h"
+#include "../mxc-mxcui/MXCUI/ui/rectprogressbar.h"
+#include "../mxc-mxcui/MXCUI/ui/listbox.h"
+#include "../mxc-mxcui/MXCUI/ui/combobox.h"
+#include "../mxc-mxcui/MXCUI/ui/checkbox.h"
+#include "../mxc-mxcui/MXCUI/ui/textedit.h"
+#include "../mxc-mxcui/MXCUI/ui/numberkeyboard.h"
+#include "../mxc-mxcui/MXCUI/ui/ledprogressbar.h"
+#include "../mxc-mxcui/MXCUI/ui/loadinganimator.h"
+#include "../mxc-mxcui/MXCUI/ui/texteditimage.h"
+#include "../mxc-mxcui/MXCUI/ui/alphabetkeyboard.h"
+#include "../mxc-mxcui/MXCUI/ui/checkimagebutton.h"
+#include "../mxc-mxcui/MXCUI/ui/messageboxpanel.h"
+#include "../mxc-mxcui/MXCUI/ui/loadingprogressbar.h"
+#include "../mxc-mxcui/MXCUI/ui/infoconfirmpanel.h"
+#include "../mxc-mxcui/MXCUI/ui/wificustombutton.h"
+#include "../mxc-mxcui/MXCUI/ui/wifialphabetkeyboard.h"
+#include "../mxc-mxcui/MXCUI/ui/uicomponent.h"
 #include <QWidget>
 #include <QFile>
 #include <QJsonParseError>
@@ -10,6 +32,8 @@
 #include <QDebug>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
+#include <QCoreApplication>
+#include <QDir>
 
 #define CIRCLE_PROCESS_BAR "CircleProgressBar"
 
@@ -225,6 +249,28 @@ public:
         }
     }
 
+    virtual void saveJsonData(QJsonObject &obj)
+    {
+        obj.insert("x",x);
+        obj.insert("y",y);
+        obj.insert("width",width);
+        obj.insert("height",height);
+        obj.insert("layer",layer);
+        obj.insert("fontsize",fontSize);
+        obj.insert("type",type);
+        obj.insert("name",name);
+        obj.insert("res_active",resActive);
+        obj.insert("res_inactive",resinActive);
+
+        QJsonObject fontColorObj;
+        fontColorObj.insert("red",fontcolor.red());
+        fontColorObj.insert("green",fontcolor.green());
+        fontColorObj.insert("blue",fontcolor.blue());
+        obj.insert("fontcolor",fontColorObj);
+
+        //array.append(obj);
+    }
+
 public:
     int x;
     int y;
@@ -238,6 +284,7 @@ public:
     QString resActive;
     QString resinActive;
     QTreeWidgetItem *bigChildItem;
+   //QJsonObject obj;
 };
 
 class CircleProBarProperty : public BaseComonentProperty{
@@ -438,6 +485,30 @@ public:
         }
 
     }
+
+    void saveJsonData(QJsonObject &obj)
+    {
+        BaseComonentProperty::saveJsonData(obj);
+        //QJsonObject obj;
+        obj.insert("penWidth",penWidth);
+        obj.insert("minValue",minValue);
+        obj.insert("maxValue",maxValue);
+        obj.insert("currentValue",currentValue);
+
+        QJsonObject colorObj;
+        colorObj.insert("red",color.red());
+        colorObj.insert("green",color.green());
+        colorObj.insert("blue",color.blue());
+        obj.insert("color",colorObj);
+
+        QJsonObject baseColorObj;
+        baseColorObj.insert("red",baseColor.red());
+        baseColorObj.insert("green",baseColor.green());
+        baseColorObj.insert("blue",baseColor.blue());
+        obj.insert("baseColor",baseColorObj);
+
+        //array.append(obj);
+    }
 public:
     QColor color;
     QColor baseColor;
@@ -464,8 +535,11 @@ public:
 class JsonProperty{
 public:
     QString fileName;
-    QVector<CircleProBarProperty> vCircleProBar;
-    QVector<CheckBoxProperty> vCheckBox;
+    QVector<CircleProBarProperty> vCircleBarProperty;
+    QVector<CircleProgressBar> vCircleBar;
+    QVector<CheckBoxProperty> vCheckBoxProperty;
+    QVector<CheckBox> vCheckBox;
+
 };
 
 class PublicFunc : public QWidget
@@ -474,6 +548,9 @@ class PublicFunc : public QWidget
 public:
     explicit PublicFunc(QWidget *parent = 0);
     static bool readUIFile(QString path,JsonProperty &vJsonPro);
+    static bool writeUIFile(const JsonProperty &jsonPro);
+    static QVector<JsonProperty> vPublicJsonPro;
+    static bool confirmFile(const QString fPath);
 signals:
 
 public slots:

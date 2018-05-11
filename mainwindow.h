@@ -18,10 +18,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QVector<JsonProperty> vJsonPro;
+
 
 signals:
-    void sigDisplayJsonProperty(QVector<JsonProperty> vJsPro);
+    void sigDisplayJsonProperty();
 public slots:
     void slotOpenFile();
     void slotSaveFile();

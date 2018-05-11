@@ -14,20 +14,21 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent)
     lastOpen = NULL;
 }
 
-void TreeWidget::slotDisplayJsonFile(QVector<JsonProperty> vJsonPro)
+void TreeWidget::slotDisplayJsonFile()
 {
     this->clear();
+    const QVector<JsonProperty> &vJsonPro = PublicFunc::vPublicJsonPro;
     for(int i = 0;i < vJsonPro.count();i++)
     {
         QString filename = vJsonPro[i].fileName;
         QTreeWidgetItem *fatherItem = new QTreeWidgetItem(this,QStringList(QString(filename)));
-        for(int j = 0;j < vJsonPro[i].vCircleProBar.count();j++)
+        for(int j = 0;j < vJsonPro[i].vCircleBarProperty.count();j++)
         {
-            CircleProBarProperty circleProperty = vJsonPro[i].vCircleProBar[j];
+            CircleProBarProperty circleProperty = vJsonPro[i].vCircleBarProperty[j];
             circleProperty.addTreeWidgetItem(fatherItem);
         }
     }
-    vTreeJsonPro = vJsonPro;
+    emit sigDisplayJsonProperty();
 }
 
 

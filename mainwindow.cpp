@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QObject::connect(ui->pBtnOpenFile,SIGNAL(clicked(bool)),this,SLOT(slotOpenFile()));
     QObject::connect(ui->pBtnSaveFile,SIGNAL(clicked(bool)),this,SLOT(slotSaveFile()));
-    QObject::connect(this,SIGNAL(sigDisplayJsonProperty(QVector<JsonProperty>)),ui->treeWidget,SLOT(slotDisplayJsonFile(QVector<JsonProperty>)));
-    QObject::connect(this,SIGNAL(sigDisplayJsonProperty(QVector<JsonProperty>)),ui->disWidget,SLOT(slotGetComProperty(QVector<JsonProperty>)));
+    QObject::connect(this,SIGNAL(sigDisplayJsonProperty()),ui->treeWidget,SLOT(slotDisplayJsonFile()));
+    QObject::connect(ui->treeWidget,SIGNAL(sigDisplayJsonProperty()),ui->disWidget,SLOT(slotGetComProperty()));
     QObject::connect(ui->treeWidget,SIGNAL(sigUpdateSta(SearchType)),ui->disWidget,SLOT(slotUpdateSta(SearchType)));
 }
 
@@ -18,22 +18,31 @@ void MainWindow::slotOpenFile()
     QStringList files = QFileDialog::getOpenFileNames(this,"Select one or more files to open","/home/raise3d","Json (*.json *.mxcui)");
     if(files.isEmpty())return;
     bool bReadFile = false;
-    vJsonPro.clear();
+    QVector<JsonProperty> &vMainJsonPro = PublicFunc::vPublicJsonPro;
+    vMainJsonPro.clear();
     for(int i = 0;i < files.count();i++)
     {
         JsonProperty tempvJsonPro;
         bReadFile = PublicFunc::readUIFile(files[i],tempvJsonPro);
-        vJsonPro.append(tempvJsonPro);
+        vMainJsonPro.append(tempvJsonPro);
     }
+
     if(bReadFile)
     {
-        emit sigDisplayJsonProperty(vJsonPro);
+        emit sigDisplayJsonProperty();
     }
 }
 
 
 void MainWindow::slotSaveFile()
 {
+    QVector<JsonProperty> &jsonPro = PublicFunc::vPublicJsonPro;
+    for(int i = 0;i < jsonPro.count();i++)
+    {
+        PublicFunc::writeUIFile(jsonPro[i]);
+
+    }
+
 
 }
 
