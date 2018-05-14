@@ -17,7 +17,7 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent)
 void TreeWidget::slotDisplayJsonFile()
 {
     //this->clear();
-    const QVector<JsonProperty> &vJsonPro = PublicFunc::vPublicJsonPro;
+    const QList<JsonProperty> &vJsonPro = PublicFunc::vPublicJsonPro;
     for(int i = 0;i < vJsonPro.count();i++)
     {
         QString filename = vJsonPro[i].fileName;
@@ -28,12 +28,11 @@ void TreeWidget::slotDisplayJsonFile()
         QTreeWidgetItem *layerItem2 = new QTreeWidgetItem(fatherItem,QStringList(QString("Layer_2")));
         QList<QTreeWidgetItem*> layerList;
         layerList << layerItem0 << layerItem1 << layerItem2;
-        for(int j = 0;j < jsonpro.vTotalJsonPro.count();j++)
+        for(int j = 0;j < jsonpro.vTotalJsonProperty.count();j++)
         {
-            BaseComonentProperty pro = jsonpro.vTotalJsonPro[j];
-            pro.addTreeWidgetItem(layerList);
+            BaseComonentProperty *pro = jsonpro.vTotalJsonProperty[j];
+            pro->addTreeWidgetItem(layerList);
         }
-
     }
     emit sigDisplayJsonProperty();
 }

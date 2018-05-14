@@ -51,7 +51,7 @@ typedef struct{
 class BaseComonentProperty{
 public:
     BaseComonentProperty():x(0),y(0),width(0),height(0),layer(0),fontSize(0),type(""),name(""),
-        fontcolor(QColor(255,255,255)),resActive(""),resinActive(""),bigChildItem(NULL)
+        fontcolor(QColor(255,255,255)),resActive(""),resinActive(""),bigChildItem(NULL),fileName("")
     {}
     virtual bool parseJsonData(QJsonValue component)
     {
@@ -165,9 +165,9 @@ public:
         vStrList.append(list);
         list.clear();
 
-        list << "layer" << QString("%1").arg(layer);
-        vStrList.append(list);
-        list.clear();
+//        list << "layer" << QString("%1").arg(layer);
+//        vStrList.append(list);
+//        list.clear();
 
         list << "fontsize" << QString("%1").arg(fontSize);
         vStrList.append(list);
@@ -284,6 +284,13 @@ public:
         //array.append(obj);
     }
 
+    virtual void initData()
+    {
+
+    }
+
+    virtual void draw(QPainter &painter)
+    {}
 public:
     int x;
     int y;
@@ -297,6 +304,7 @@ public:
     QString resActive;
     QString resinActive;
     QTreeWidgetItem *bigChildItem;
+    QString fileName;
 
 };
 
@@ -446,6 +454,7 @@ public:
 
     void setData(const SearchType &st)
     {
+        if(st.fileName.compare(fileName) != 0 || st.structName.compare(name) != 0) return;
         BaseComonentProperty::setData(st);
         QString str = st.item.text(0);
         QString value = st.item.text(1);
@@ -523,6 +532,22 @@ public:
 
         //array.append(obj);
     }
+
+    void initData()
+    {
+        QRectF rectangle = QRectF(x,y,width,height);
+        circleBar.setData(rectangle,color,baseColor,penWidth,minValue,maxValue);
+        circleBar.setValue(currentValue);
+    }
+
+    void draw(QPainter &painter)
+    {
+        QRectF rectangle = QRectF(x,y,width,height);
+        circleBar.setData(rectangle,color,baseColor,penWidth,minValue,maxValue);
+        circleBar.setValue(currentValue);
+        circleBar.draw(painter);
+    }
+
 public:
     QColor color;
     QColor baseColor;
@@ -655,12 +680,12 @@ public:
 class JsonProperty{
 public:
     QString fileName;
-    QVector<CircleProBarProperty> vCircleBarProperty;
-    QVector<CheckBoxProperty> vCheckBoxProperty;
-    QVector<ImageButtonProperty> vImageBtnProperty;
-    QVector<AlphabetKeyboardProperty> vAlKeyboardProperty;
+//    QVector<CircleProBarProperty> vCircleBarProperty;
+//    QVector<CheckBoxProperty> vCheckBoxProperty;
+//    QVector<ImageButtonProperty> vImageBtnProperty;
+//    QVector<AlphabetKeyboardProperty> vAlKeyboardProperty;
 
-    QVector<BaseComonentProperty> vTotalJsonPro;
+    QList<BaseComonentProperty*> vTotalJsonProperty;
 
 };
 
@@ -671,8 +696,9 @@ public:
     explicit PublicFunc(QWidget *parent = 0);
     static bool readUIFile(QString path,JsonProperty &vJsonPro);
     static bool writeUIFile(const JsonProperty &jsonPro);
-    static QVector<JsonProperty> vPublicJsonPro;
+    static QList<JsonProperty> vPublicJsonPro;
     static bool confirmFile(const QString fPath);
+    static int proNum;
 signals:
 
 public slots:

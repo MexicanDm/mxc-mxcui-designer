@@ -27,8 +27,8 @@
    <widget class="QPushButton" name="pBtnOpenFile">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>690</y>
+      <x>30</x>
+      <y>730</y>
       <width>99</width>
       <height>41</height>
      </rect>
@@ -40,8 +40,8 @@
    <widget class="QPushButton" name="pBtnSaveFile">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>690</y>
+      <x>220</x>
+      <y>730</y>
       <width>99</width>
       <height>41</height>
      </rect>
@@ -58,6 +58,59 @@
       <width>331</width>
       <height>661</height>
      </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string notr="true">1</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QCheckBox" name="cBox0">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>690</y>
+      <width>75</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Layer0</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cBox1">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>690</y>
+      <width>75</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Layer1</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cBox2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>690</y>
+      <width>75</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Layer2</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

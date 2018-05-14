@@ -19,10 +19,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
+    bool layerSta0;
+    bool layerSta1;
+    bool layerSta2;
 
 signals:
     void sigDisplayJsonProperty();
+    void sigLayerSta(bool s0,bool s1,bool s2);
 public slots:
     void slotOpenFile();
     void slotSaveFile();
