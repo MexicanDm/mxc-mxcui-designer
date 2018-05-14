@@ -19,7 +19,7 @@ void MainWindow::slotOpenFile()
     if(files.isEmpty())return;
     bool bReadFile = false;
     QVector<JsonProperty> &vMainJsonPro = PublicFunc::vPublicJsonPro;
-    vMainJsonPro.clear();
+    //vMainJsonPro.clear();
     for(int i = 0;i < files.count();i++)
     {
         JsonProperty tempvJsonPro;
@@ -37,12 +37,19 @@ void MainWindow::slotOpenFile()
 void MainWindow::slotSaveFile()
 {
     QVector<JsonProperty> &jsonPro = PublicFunc::vPublicJsonPro;
+    bool writeB = false;
     for(int i = 0;i < jsonPro.count();i++)
     {
-        PublicFunc::writeUIFile(jsonPro[i]);
-
+        writeB = PublicFunc::writeUIFile(jsonPro[i]);
     }
-
+    if(writeB)
+    {
+        QMessageBox::about(NULL, "Prompt", "Json Files Save OK!");
+    }
+    else
+    {
+        QMessageBox::about(NULL, "Prompt", "Json Files Save ERROR!");
+    }
 
 }
 

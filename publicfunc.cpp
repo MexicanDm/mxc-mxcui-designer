@@ -5,6 +5,12 @@ PublicFunc::PublicFunc(QWidget *parent) : QWidget(parent)
 {
 
 }
+/**
+ * @brief PublicFunc::readUIFile 读取Json
+ * @param path
+ * @param jsonPro
+ * @return
+ */
 bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
 {
     QFile fileR(path);
@@ -31,18 +37,35 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                 if(iter != compObj.end())
                 {
                     QString tmp = iter.value().toString();
-                    if(tmp.compare(CIRCLE_PROCESS_BAR) == 0)
+                    if(tmp.compare(CIRCLE_PROCESS_BAR_STR) == 0)
                     {
                         CircleProBarProperty tmpCircle;
                         tmpCircle.parseJsonData(component);
                         jsonPro.vCircleBarProperty.append(tmpCircle);
+                        jsonPro.vTotalJsonPro.append(jsonPro.vCircleBarProperty.last());
                     }
-                    else if(tmp.compare("CheckBox") == 0)
+                    else if(tmp.compare(CHECK_BOX_STR) == 0)
                     {
                         CheckBoxProperty tmpCheck;
                         tmpCheck.parseJsonData(component);
                         jsonPro.vCheckBoxProperty.append(tmpCheck);
+                        jsonPro.vTotalJsonPro.append(jsonPro.vCheckBoxProperty.last());
                     }
+                    else if(tmp.compare(IMAGE_BUTTON_STR) == 0)
+                    {
+                        ImageButtonProperty imageBtnPro;
+                        imageBtnPro.parseJsonData(component);
+                        jsonPro.vImageBtnProperty.append(imageBtnPro);
+                        jsonPro.vTotalJsonPro.append(jsonPro.vImageBtnProperty.last());
+                    }
+                    else if(tmp.compare(ALPHABET_KEYBOARD_STR) == 0)
+                    {
+                        AlphabetKeyboardProperty alKeyboard;
+                        alKeyboard.parseJsonData(component);
+                        jsonPro.vAlKeyboardProperty.append(alKeyboard);
+                        jsonPro.vTotalJsonPro.append(jsonPro.vAlKeyboardProperty.last());
+                    }
+
                 }
             }
         }
@@ -70,11 +93,11 @@ bool PublicFunc::writeUIFile(const JsonProperty &jsonPro)
     QJsonObject mainObj;
     QJsonArray array;
 
-    for(int i = 0;i < jsonPro.vCircleBarProperty.count();i++)
+    for(int i = 0;i < jsonPro.vTotalJsonPro.count();i++)
     {
         QJsonObject obj;
-        CircleProBarProperty circlePro = jsonPro.vCircleBarProperty[i];
-        circlePro.saveJsonData(obj);
+        BaseComonentProperty pro = jsonPro.vTotalJsonPro[i];
+        pro.saveJsonData(obj);
         array.append(obj);
     }
 

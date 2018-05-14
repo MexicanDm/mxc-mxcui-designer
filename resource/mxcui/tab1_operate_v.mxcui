@@ -1,0 +1,36 @@
+{
+"components":[
+	{
+	  "name":"buttonPrintPause",
+	  "x":215,
+	  "y":604,
+	  "layer":1,
+	  "width":170,
+	  "height":62
+	},
+	{
+	  "name":"buttonPrintStop",
+	  "x":215,
+	  "y":720,
+	  "layer":1,
+	  "width":170,
+	  "height":62
+	},
+	{
+	  "name":"buttonPrintPauseSPANISH",
+	  "x":185,
+	  "y":604,
+	  "layer":1,
+	  "width":230,
+	  "height":62
+	},
+	{
+	  "name":"buttonPrintStopSPANISH",
+	  "x":185,
+	  "y":604,
+	  "layer":1,
+	  "width":230,
+	  "height":62
+	}
+  ]
+}

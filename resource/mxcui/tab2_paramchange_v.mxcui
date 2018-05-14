@@ -1,0 +1,36 @@
+{
+"components":[
+	{
+	  "name":"buttonChangeParamOK",
+	  "x":123,
+	  "y":382,
+	  "layer":1,
+	  "width":170,
+	  "height":62
+	},
+	{
+	  "name":"buttonChangeParamCancel",
+	  "x":308,
+	  "y":382,
+	  "layer":1,
+	  "width":170,
+	  "height":62
+	},
+	{
+	  "name":"paramValueEdit",
+	  "x":123,
+	  "y":285,
+	  "layer":1,
+	  "width":355,
+	  "height":55
+	},
+	{
+	  "name":"paramValueBoard",
+	  "x":0,
+	  "y":622,
+	  "layer":1,
+	  "width":600,
+	  "height":401
+	}
+  ]
+}

@@ -35,7 +35,10 @@
 #include <QCoreApplication>
 #include <QDir>
 
-#define CIRCLE_PROCESS_BAR "CircleProgressBar"
+#define CIRCLE_PROCESS_BAR_STR "CircleProgressBar"
+#define CHECK_BOX_STR "CheckBox"
+#define IMAGE_BUTTON_STR "ImageButton"
+#define ALPHABET_KEYBOARD_STR "AlphabetKeyboard"
 
 typedef struct{
     QString fileName;
@@ -127,11 +130,20 @@ public:
         }
         return true;
     }
-    virtual void addTreeWidgetItem(QTreeWidgetItem *fatherItem)
+
+    virtual void addTreeWidgetItem(QList<QTreeWidgetItem *>layerList)
     {
-        bigChildItem = new QTreeWidgetItem(fatherItem,QStringList(QString(name)));
         QVector<QStringList> vStrList;
         QStringList list;
+
+        if(layerList.count() > 0 && layer < layerList.count())
+        {
+            bigChildItem = new QTreeWidgetItem(layerList.at(layer),QStringList(QString(name)));
+        }
+        else
+        {
+            return;
+        }
 
         list << "type" << type;
         vStrList.append(list);
@@ -193,6 +205,7 @@ public:
         {
             new QTreeWidgetItem(itemColor,vStrList[k]);
         }
+        //delete bigChildItem;
     }
 
     virtual void setData(const SearchType &st)
@@ -284,7 +297,7 @@ public:
     QString resActive;
     QString resinActive;
     QTreeWidgetItem *bigChildItem;
-   //QJsonObject obj;
+
 };
 
 class CircleProBarProperty : public BaseComonentProperty{
@@ -362,9 +375,10 @@ public:
         }
         return true;
     }
-    void addTreeWidgetItem(QTreeWidgetItem *fatherItem)
+
+    void addTreeWidgetItem(QList<QTreeWidgetItem *>layerList)
     {
-        BaseComonentProperty::addTreeWidgetItem(fatherItem);
+        BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
         QVector<QStringList> vStrList;
         QStringList list;
@@ -516,6 +530,7 @@ public:
     int minValue;
     int maxValue;
     int currentValue;
+    CircleProgressBar circleBar;
 };
 
 class CheckBoxProperty : public BaseComonentProperty{
@@ -529,6 +544,111 @@ public:
     }
 
 public:
+    CheckBox vCheckBox;
+
+};
+/**
+ * @brief The ImageButtonProperty class ImageButton
+ */
+class ImageButtonProperty : public BaseComonentProperty{
+public:
+    ImageButtonProperty() : BaseComonentProperty(),color(QColor(255,255,255))
+    {}
+    bool parseJsonData(QJsonValue component)
+    {
+        bool parentB = BaseComonentProperty::parseJsonData(component);
+        QJsonObject compObj = component.toObject();
+        QJsonObject::iterator iter = compObj.find("color");
+        if(iter != compObj.end())
+        {
+            QJsonObject colorObj = iter.value().toObject();
+            int r = 255, g = 255, b = 255;
+            iter = colorObj.find("red");
+            if(iter != colorObj.end())
+            {
+                r = iter.value().toInt();
+            }
+            iter = colorObj.find("green");
+            if(iter != colorObj.end())
+            {
+                g = iter.value().toInt();
+            }
+            iter = colorObj.find("blue");
+            if(iter != colorObj.end())
+            {
+                b = iter.value().toInt();
+            }
+            color = QColor(r,g,b);
+        }
+        if(parentB)
+            return true;
+        else
+            return false;
+    }
+
+    void addTreeWidgetItem(QList<QTreeWidgetItem *>layerList)
+    {
+        BaseComonentProperty::addTreeWidgetItem(layerList);
+        if(bigChildItem == NULL) return ;
+        QVector<QStringList> vStrList;
+        QStringList list;
+
+        list << "color";
+        QTreeWidgetItem *itemColor = new QTreeWidgetItem(bigChildItem,list);
+        list.clear();
+        vStrList.clear();
+        list << "R" << QString("%1").arg(color.red());
+        vStrList.append(list);
+        list.clear();
+
+        list << "G" << QString("%1").arg(color.green());
+        vStrList.append(list);
+        list.clear();
+
+        list << "B" << QString("%1").arg(color.blue());
+        vStrList.append(list);
+        list.clear();
+        for(int k = 0;k < vStrList.count();k++)
+        {
+            new QTreeWidgetItem(itemColor,vStrList[k]);
+        }
+    }
+
+    void setData(const SearchType &st)
+    {
+        BaseComonentProperty::setData(st);
+        QString str = st.item.text(0);
+        QString value = st.item.text(1);
+        QString cName = st.colorName;
+        if(cName.compare("color") == 0)
+        {
+            if(str.compare("R") == 0)
+            {
+                color.setRed(value.toInt());
+            }
+            else if(str.compare("G") == 0)
+            {
+                color.setGreen(value.toInt());
+            }
+            else if(str.compare("B") == 0)
+            {
+                color.setBlue(value.toInt());
+            }
+        }
+    }
+public:
+    QColor color;
+    ImageButton imageBtn;
+};
+
+class AlphabetKeyboardProperty : public BaseComonentProperty{
+public:
+    AlphabetKeyboardProperty() : BaseComonentProperty()
+    {}
+
+public:
+    AlphabetKeyboard alKeyboard;
+
 
 };
 
@@ -536,9 +656,11 @@ class JsonProperty{
 public:
     QString fileName;
     QVector<CircleProBarProperty> vCircleBarProperty;
-    QVector<CircleProgressBar> vCircleBar;
     QVector<CheckBoxProperty> vCheckBoxProperty;
-    QVector<CheckBox> vCheckBox;
+    QVector<ImageButtonProperty> vImageBtnProperty;
+    QVector<AlphabetKeyboardProperty> vAlKeyboardProperty;
+
+    QVector<BaseComonentProperty> vTotalJsonPro;
 
 };
 

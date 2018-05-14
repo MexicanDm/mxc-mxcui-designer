@@ -16,17 +16,24 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent)
 
 void TreeWidget::slotDisplayJsonFile()
 {
-    this->clear();
+    //this->clear();
     const QVector<JsonProperty> &vJsonPro = PublicFunc::vPublicJsonPro;
     for(int i = 0;i < vJsonPro.count();i++)
     {
         QString filename = vJsonPro[i].fileName;
+        const JsonProperty &jsonpro = vJsonPro[i];
         QTreeWidgetItem *fatherItem = new QTreeWidgetItem(this,QStringList(QString(filename)));
-        for(int j = 0;j < vJsonPro[i].vCircleBarProperty.count();j++)
+        QTreeWidgetItem *layerItem0 = new QTreeWidgetItem(fatherItem,QStringList(QString("Layer_0")));
+        QTreeWidgetItem *layerItem1 = new QTreeWidgetItem(fatherItem,QStringList(QString("Layer_1")));
+        QTreeWidgetItem *layerItem2 = new QTreeWidgetItem(fatherItem,QStringList(QString("Layer_2")));
+        QList<QTreeWidgetItem*> layerList;
+        layerList << layerItem0 << layerItem1 << layerItem2;
+        for(int j = 0;j < jsonpro.vTotalJsonPro.count();j++)
         {
-            CircleProBarProperty circleProperty = vJsonPro[i].vCircleBarProperty[j];
-            circleProperty.addTreeWidgetItem(fatherItem);
+            BaseComonentProperty pro = jsonpro.vTotalJsonPro[j];
+            pro.addTreeWidgetItem(layerList);
         }
+
     }
     emit sigDisplayJsonProperty();
 }
@@ -63,7 +70,7 @@ void TreeWidget::slotSelectionChanged(QTreeWidgetItem* changedItem,int column)
             st.colorName = "";
         }
 
-        st.fileName = parentItem->parent()->text(0);
+        st.fileName = parentItem->parent()->parent()->text(0);
         st.structName = parentItem->text(0);
         st.structType = parentItem->child(0)->text(1);
         st.item = *changedItem;
