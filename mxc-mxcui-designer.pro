@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     ../mxc-mxcui/MXCUI/ui/imagebutton.cpp \
     ../mxc-mxcui/MXCUI/ui/uicomponent.cpp \
     ../mxc-mxcui/MXCUI/ui/wifialphabetkeyboard.cpp \
-    treewidget.cpp
+    treewidget.cpp \
+    jsonPropertyItem/basecomonentproperty.cpp
 
 HEADERS  += mainwindow.h \
     paintwidget.h \
@@ -46,7 +47,14 @@ HEADERS  += mainwindow.h \
     ../mxc-mxcui/MXCUI/ui/uicomponent.h \
     ../mxc-mxcui/MXCUI/ui/wifialphabetkeyboard.h \
     ../mxc-mxcui/MXCUI/ui/wificustombutton.h \
-    treewidget.h
+    treewidget.h \
+    jsonPropertyItem/circleprobarproperty.h \
+    jsonPropertyItem/checkboxproperty.h \
+    jsonPropertyItem/imagebuttonproperty.h \
+    jsonPropertyItem/alphabetkeyboardproperty.h \
+    jsonPropertyItem/textlabelproperty.h \
+    jsonPropertyItem/texteditproperty.h \
+    jsonPropertyItem/basecomonentproperty.h
 
 
 FORMS    += mainwindow.ui

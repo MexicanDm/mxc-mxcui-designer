@@ -2,10 +2,7 @@
 
 PaintWidget::PaintWidget(QWidget *parent) : QWidget(parent)
 {
-    for(int i =0;i < 3;i++)
-    {
-        layerSta[i] = -1;
-    }
+    layerSta << -1 << -1 << -1;
 }
 
 void PaintWidget::slotUpdateSta(SearchType st)
@@ -23,21 +20,17 @@ void PaintWidget::slotUpdateSta(SearchType st)
     update();
 }
 
-void PaintWidget::slotSetLayerSta(bool layer0, bool layer1, bool layer2)
+void PaintWidget::slotSetLayerSta(QList<int> ls)
 {
-    if(layer0) layerSta[0] = 0;
-    else layerSta[0] = -1;
-    if(layer1) layerSta[1] = 1;
-    else layerSta[1] = -1;
-    if(layer2)layerSta[2] = 2;
-    else layerSta = -1;
+    layerSta = ls;
+    update();
 }
 
 void PaintWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-    int w = 600;
-    int h = 1024;
+    int w = 1024;
+    int h = 600;
     QPainter painter(this);
     QList<JsonProperty> &vJsonPro = PublicFunc::vPublicJsonPro;
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -51,8 +44,16 @@ void PaintWidget::paintEvent(QPaintEvent *event)
         JsonProperty jsonpro = vJsonPro[i];
         for(int j = 0;j < jsonpro.vTotalJsonProperty.count();j++)
         {
-            if(jsonpro.vTotalJsonProperty[j]->layer == )
-            jsonpro.vTotalJsonProperty[j]->draw(painter);
+            bool layerDisb = false;
+            for(int k = 0;k < layerSta.count();k++)
+            {
+                if(jsonpro.vTotalJsonProperty[j]->layer == layerSta[k])
+                {
+                    layerDisb = true;
+                }
+            }
+            if(layerDisb)
+                jsonpro.vTotalJsonProperty[j]->draw(painter);
         }
     }
 }

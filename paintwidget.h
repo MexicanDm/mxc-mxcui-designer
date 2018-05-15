@@ -12,11 +12,11 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
 private:
-    int layerSta[3];
+    QList<int> layerSta;
 signals:
 
 public slots:
-    void slotSetLayerSta(bool layer0,bool layer1,bool layer2);
+    void slotSetLayerSta(QList<int> ls);
     void slotUpdateSta(SearchType st);
 };
 

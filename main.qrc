@@ -422,19 +422,4 @@
         <file alias="network-last">resource/txt/network-last</file>
         <file alias="network-pre">resource/txt/network-pre</file>
     </qresource>
-    <qresource prefix="/mxcui">
-        <file>resource/mxcui/tab1_finish_v.mxcui</file>
-        <file>resource/mxcui/tab1_home_h.mxcui</file>
-        <file>resource/mxcui/tab1_home_v.mxcui</file>
-        <file>resource/mxcui/tab1_operate_v.mxcui</file>
-        <file>resource/mxcui/tab1_paramchange_v.mxcui</file>
-        <file>resource/mxcui/tab2_paramchange_v.mxcui</file>
-        <file>resource/mxcui/tab2_tune_v.mxcui</file>
-        <file>resource/mxcui/tab3_utilities_v.mxcui</file>
-        <file>resource/mxcui/tab4_storage_v.mxcui</file>
-        <file>resource/mxcui/tab4_storage_vmxcui</file>
-        <file>resource/mxcui/tab4_summary_v.mxcui</file>
-        <file>resource/mxcui/tab4_temptask_v.mxcui</file>
-        <file>resource/mxcui/tab4_upload_v.mxcui</file>
-    </qresource>
 </RCC>

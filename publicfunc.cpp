@@ -1,10 +1,8 @@
 #include "publicfunc.h"
 
 QList<JsonProperty> PublicFunc::vPublicJsonPro;
-int PublicFunc::proNum = 0;
 PublicFunc::PublicFunc(QWidget *parent) : QWidget(parent)
 {
-
 }
 /**
  * @brief PublicFunc::readUIFile 读取Json
@@ -44,7 +42,34 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                          tmpCircle->parseJsonData(component);
                          tmpCircle->fileName = jsonPro.fileName;
                         jsonPro.vTotalJsonProperty.append(tmpCircle);
-                        proNum++;
+                    }
+                    else if(tmp.compare(CHECK_BOX_STR) == 0)
+                    {
+                        BaseComonentProperty *tmpCheckBox = new CheckBoxProperty();
+                        tmpCheckBox->parseJsonData(component);
+                        tmpCheckBox->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpCheckBox);
+                    }
+                    else if(tmp.compare(IMAGE_BUTTON_STR) == 0)
+                    {
+                        BaseComonentProperty *tmpImageBtn = new ImageButtonProperty();
+                        tmpImageBtn->parseJsonData(component);
+                        tmpImageBtn->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpImageBtn);
+                    }
+                    else if(tmp.compare(TEXT_LABEL_STR) == 0)
+                    {
+                        BaseComonentProperty *tmpTextLab = new TextLabelProperty();
+                        tmpTextLab->parseJsonData(component);
+                        tmpTextLab->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpTextLab);
+                    }
+                    else if(tmp.compare(TEXT_EDIT_STR) == 0)
+                    {
+                        BaseComonentProperty *tmpTextEdit = new TextEditProperty();
+                        tmpTextEdit->parseJsonData(component);
+                        tmpTextEdit->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpTextEdit);
                     }
                 }
             }

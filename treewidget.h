@@ -23,7 +23,8 @@ signals:
 public slots:
     void slotDisplayJsonFile();
     void slotOpenPersistentEditor(QTreeWidgetItem* item,int column);
-    void slotSelectionChanged(QTreeWidgetItem* changedItem,int column);
+    void slotItemChanged(QTreeWidgetItem* changedItem,int column);
+    void slotSeleteChanged();
 };
 
 #endif // TREEWIDGET_H

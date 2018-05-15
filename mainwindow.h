@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QButtonGroup>
+#include <QTimer>
 #include "publicfunc.h"
 namespace Ui {
 class MainWindow;
@@ -23,12 +25,17 @@ private:
     bool layerSta1;
     bool layerSta2;
 
+    QList<int> cBtnSta;
+
 signals:
     void sigDisplayJsonProperty();
-    void sigLayerSta(bool s0,bool s1,bool s2);
+    void sigLayerSta(QList<int> layerSta);
 public slots:
     void slotOpenFile();
     void slotSaveFile();
+    void slotcBtnSta();
+    void slotReadBtnSta();
+    void slotClear();
 };
 
 #endif // MAINWINDOW_H

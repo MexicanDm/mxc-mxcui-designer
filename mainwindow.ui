@@ -20,34 +20,34 @@
       <x>360</x>
       <y>10</y>
       <width>1024</width>
-      <height>911</height>
+      <height>600</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pBtnOpenFile">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>730</y>
-      <width>99</width>
-      <height>41</height>
+      <x>40</x>
+      <y>920</y>
+      <width>82</width>
+      <height>27</height>
      </rect>
     </property>
     <property name="text">
-     <string>打开</string>
+     <string>open</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pBtnSaveFile">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>730</y>
-      <width>99</width>
-      <height>41</height>
+      <x>190</x>
+      <y>920</y>
+      <width>81</width>
+      <height>27</height>
      </rect>
     </property>
     <property name="text">
-     <string>保存</string>
+     <string>save</string>
     </property>
    </widget>
    <widget class="TreeWidget" name="treeWidget">
@@ -56,62 +56,77 @@
       <x>10</x>
       <y>10</y>
       <width>331</width>
-      <height>661</height>
+      <height>831</height>
      </rect>
     </property>
-    <column>
-     <property name="text">
-      <string notr="true">1</string>
-     </property>
-    </column>
    </widget>
-   <widget class="QCheckBox" name="cBox0">
+   <widget class="QPushButton" name="btnClear">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>960</y>
+      <width>81</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>clear</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnClear_2">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>690</y>
-      <width>75</width>
-      <height>18</height>
+      <y>960</y>
+      <width>82</width>
+      <height>27</height>
      </rect>
     </property>
     <property name="text">
-     <string>Layer0</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
+     <string>Horizontal</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="cBox1">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>690</y>
-      <width>75</width>
-      <height>18</height>
+      <x>10</x>
+      <y>880</y>
+      <width>331</width>
+      <height>24</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Layer1</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="cBox2">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>690</y>
-      <width>75</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Layer2</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="cBox0">
+       <property name="text">
+        <string>Layer0</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cBox1">
+       <property name="text">
+        <string>Layer1</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cBox2">
+       <property name="text">
+        <string>Layer2</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -120,7 +135,7 @@
      <x>0</x>
      <y>0</y>
      <width>1400</width>
-     <height>17</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
