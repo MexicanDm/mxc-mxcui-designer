@@ -71,6 +71,48 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                         tmpTextEdit->fileName = jsonPro.fileName;
                         jsonPro.vTotalJsonProperty.append(tmpTextEdit);
                     }
+                    else if(tmp.compare(TEXT_EDIT_IMAGE_STA) == 0)
+                    {
+                        BaseComonentProperty *tmpPro = new TextEditImageProperty();
+                        tmpPro->parseJsonData(component);
+                        tmpPro->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                    }
+                    else if(tmp.compare(CHECK_IMAGE_BUTTON_STA) == 0)
+                    {
+                        BaseComonentProperty *tmpPro = new CheckImageButtonProperty();
+                        tmpPro->parseJsonData(component);
+                        tmpPro->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                    }
+                    else if(tmp.compare(LED_PROGRESS_BAR_STA) == 0)
+                    {
+                        BaseComonentProperty *tmpPro = new LedProgressBarProperty();
+                        tmpPro->parseJsonData(component);
+                        tmpPro->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                    }
+                    else if(tmp.compare(LOADING_PROGRESS_BAR_STA) == 0)
+                    {
+                        BaseComonentProperty *tmpPro = new LoadingProgressBarProperty();
+                        tmpPro->parseJsonData(component);
+                        tmpPro->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                    }
+                    else if(tmp.compare(RECT_PROCESS_BAR_STR) == 0)
+                    {
+                        BaseComonentProperty *tmpPro = new RectProgressBarProperty();
+                        tmpPro->parseJsonData(component);
+                        tmpPro->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                    }
+                    else if(tmp.compare(ROUND_RECT_PROGRESS_BAR_STA) == 0)
+                    {
+                        BaseComonentProperty *tmpPro = new RoundRectProgressBarProperty();
+                        tmpPro->parseJsonData(component);
+                        tmpPro->fileName = jsonPro.fileName;
+                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                    }
                 }
             }
         }

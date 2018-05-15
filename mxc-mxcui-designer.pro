@@ -54,7 +54,14 @@ HEADERS  += mainwindow.h \
     jsonPropertyItem/alphabetkeyboardproperty.h \
     jsonPropertyItem/textlabelproperty.h \
     jsonPropertyItem/texteditproperty.h \
-    jsonPropertyItem/basecomonentproperty.h
+    jsonPropertyItem/basecomonentproperty.h \
+    jsonPropertyItem/checkimagebuttonproperty.h \
+    jsonPropertyItem/comboitemproperty.h \
+    jsonPropertyItem/rectprogressbarproperty.h \
+    jsonPropertyItem/ledprogressbarproperty.h \
+    jsonPropertyItem/loadingprogressbarproperty.h \
+    jsonPropertyItem/roundrectprogressbarproperty.h \
+    jsonPropertyItem/texteditimageproperty.h
 
 
 FORMS    += mainwindow.ui

@@ -41,6 +41,13 @@
 #define ALPHABET_KEYBOARD_STR "AlphabetKeyboard"
 #define TEXT_LABEL_STR "TextLabel"
 #define TEXT_EDIT_STR "TextEdit"
+#define TEXT_EDIT_IMAGE_STA "TextEditImage"
+#define CHECK_IMAGE_BUTTON_STA "CheckImageButton"
+//#define COMBO_ITEM_STA "ComboItem"
+#define LED_PROGRESS_BAR_STA "LedProgressBar"
+#define LOADING_PROGRESS_BAR_STA "LoadingProgressBar"
+#define RECT_PROCESS_BAR_STR "RectProgressBar"
+#define ROUND_RECT_PROGRESS_BAR_STA "RoundRectProcessBar"
 
 typedef struct SearchType_{
     QString fileName;

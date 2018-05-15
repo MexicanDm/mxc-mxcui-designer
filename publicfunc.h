@@ -8,6 +8,13 @@
 #include "jsonPropertyItem/imagebuttonproperty.h"
 #include "jsonPropertyItem/textlabelproperty.h"
 #include "jsonPropertyItem/texteditproperty.h"
+#include "jsonPropertyItem/texteditimageproperty.h"
+#include "jsonPropertyItem/checkimagebuttonproperty.h"
+#include "jsonPropertyItem/comboitemproperty.h"
+#include "jsonPropertyItem/ledprogressbarproperty.h"
+#include "jsonPropertyItem/loadingprogressbarproperty.h"
+#include "jsonPropertyItem/rectprogressbarproperty.h"
+#include "jsonPropertyItem/roundrectprogressbarproperty.h"
 
 class JsonProperty{
 public:
