@@ -34,10 +34,11 @@ public:
 
     void draw(QPainter &painter)
     {
+        sl.setData(x,y,width,height);
         sl.draw(painter);
     }
 public:
-    SolidLine sl;
+    MySolidLine sl;
 };
 
 #endif // SOLIDLINEPROPERTY_H

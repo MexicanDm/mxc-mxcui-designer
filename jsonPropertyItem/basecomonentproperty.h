@@ -23,7 +23,7 @@
 #include "../mxc-mxcui/MXCUI/ui/wificustombutton.h"
 #include "../mxc-mxcui/MXCUI/ui/wifialphabetkeyboard.h"
 #include "../mxc-mxcui/MXCUI/ui/uicomponent.h"
-#include "solidline.h"
+#include "../mxc-mxcui/MXCUI/ui/mysolidline.h"
 #include <QWidget>
 #include <QFile>
 #include <QJsonParseError>
@@ -55,14 +55,14 @@
 #define WIFI_CUSTOM_BUTTON_STR "WifiCustomButton"
 #define WIFI_ALPHABET_KEYBOAED_STR "WifiAlphabetKeyboard"
 #define INFO_CONFIRM_PANEL_STR "InfoConfirmPanel"
-#define SOLID_LINE_STR "SolidLine"
+#define My_SOLID_LINE_STR "MySolidLine"
 
 typedef struct SearchType_{
     QString fileName;
     QString structName;
     QString structType;
     QString cpName;
-    QTreeWidgetItem item;
+    QTreeWidgetItem *item;
 }SearchType;
 
 class BaseComonentProperty{

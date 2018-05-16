@@ -5,6 +5,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include "publicfunc.h"
+#include <QCheckBox>
 
 
 

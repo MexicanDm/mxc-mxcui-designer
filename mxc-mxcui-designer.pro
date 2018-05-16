@@ -68,7 +68,8 @@ HEADERS  += mainwindow.h \
     jsonPropertyItem/infoconfirmpanelproperty.h \
     jsonPropertyItem/imagelabelproperty.h \
     jsonPropertyItem/solidline.h \
-    jsonPropertyItem/solidlineproperty.h
+    jsonPropertyItem/solidlineproperty.h \
+    ../mxc-mxcui/MXCUI/ui/mysolidline.h
 
 
 FORMS    += mainwindow.ui

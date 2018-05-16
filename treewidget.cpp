@@ -62,7 +62,8 @@ void TreeWidget::slotOpenPersistentEditor(QTreeWidgetItem* item,int column)
 {
     if( 1 == column  )
     {
-        if(item->child(0) != NULL || (item->text(0).compare("type") == 0)) return;
+        QCheckBox *cpy = (QCheckBox*)item->treeWidget()->itemWidget(item,0);
+        if(cpy->text().compare("type") == 0 || item->child(0) != NULL)return;
         this->openPersistentEditor(item,column);
         lastOpen = item;
     }
@@ -99,7 +100,7 @@ void TreeWidget::slotItemChanged(QTreeWidgetItem* changedItem,int column)
         st.fileName = parentItem->parent()->parent()->text(0);
         st.structName = parentItem->text(0);
         st.structType = parentItem->child(0)->text(1);
-        st.item = *changedItem;
+        st.item = changedItem;
         emit sigUpdateSta(st);
     }
 

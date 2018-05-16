@@ -105,7 +105,7 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                     {
                         tmpPro = new InfoConfirmPanelProperty();
                     }
-                    else if(tmp.compare(SOLID_LINE_STR) == 0)
+                    else if(tmp.compare(My_SOLID_LINE_STR) == 0)
                     {
                         tmpPro = new SolidLineProperty();
                     }
