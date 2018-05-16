@@ -1,12 +1,10 @@
-#ifndef ALPHABETKEYBOARDPROPERTY_H
-#define ALPHABETKEYBOARDPROPERTY_H
-
+#ifndef SOLIDLINEPROPERTY_H
+#define SOLIDLINEPROPERTY_H
 #include "basecomonentproperty.h"
-
-class AlphabetKeyboardProperty : public BaseComonentProperty
+class SolidLineProperty : public BaseComonentProperty
 {
 public:
-    AlphabetKeyboardProperty() : BaseComonentProperty()
+    SolidLineProperty() : BaseComonentProperty()
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -36,14 +34,11 @@ public:
 
     void draw(QPainter &painter)
     {
-        alKeyboard.init(&baseFont);
-        alKeyboard.draw(painter);
+        sl.draw(painter);
     }
 public:
-    AlphabetKeyboard alKeyboard;
-
-
+    SolidLine sl;
 };
 
-#endif // ALPHABETKEYBOARDPROPERTY_H
+#endif // SOLIDLINEPROPERTY_H
 

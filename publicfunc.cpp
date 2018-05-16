@@ -36,79 +36,81 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                 if(iter != compObj.end())
                 {
                     QString tmp = iter.value().toString();
+                    BaseComonentProperty *tmpPro = NULL;
                     if(tmp.compare(CIRCLE_PROCESS_BAR_STR) == 0)
                     {
-                        BaseComonentProperty *tmpCircle = new CircleProBarProperty();
-                         tmpCircle->parseJsonData(component);
-                         tmpCircle->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpCircle);
+                        tmpPro = new CircleProBarProperty();
                     }
                     else if(tmp.compare(CHECK_BOX_STR) == 0)
                     {
-                        BaseComonentProperty *tmpCheckBox = new CheckBoxProperty();
-                        tmpCheckBox->parseJsonData(component);
-                        tmpCheckBox->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpCheckBox);
+                        tmpPro = new CheckBoxProperty();
                     }
                     else if(tmp.compare(IMAGE_BUTTON_STR) == 0)
                     {
-                        BaseComonentProperty *tmpImageBtn = new ImageButtonProperty();
-                        tmpImageBtn->parseJsonData(component);
-                        tmpImageBtn->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpImageBtn);
+                        tmpPro = new ImageButtonProperty();
                     }
                     else if(tmp.compare(TEXT_LABEL_STR) == 0)
                     {
-                        BaseComonentProperty *tmpTextLab = new TextLabelProperty();
-                        tmpTextLab->parseJsonData(component);
-                        tmpTextLab->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpTextLab);
+                        tmpPro = new TextLabelProperty();
                     }
                     else if(tmp.compare(TEXT_EDIT_STR) == 0)
                     {
-                        BaseComonentProperty *tmpTextEdit = new TextEditProperty();
-                        tmpTextEdit->parseJsonData(component);
-                        tmpTextEdit->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpTextEdit);
+                        tmpPro = new TextEditProperty();
                     }
                     else if(tmp.compare(TEXT_EDIT_IMAGE_STA) == 0)
                     {
-                        BaseComonentProperty *tmpPro = new TextEditImageProperty();
-                        tmpPro->parseJsonData(component);
-                        tmpPro->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                        tmpPro = new TextEditImageProperty();
                     }
                     else if(tmp.compare(CHECK_IMAGE_BUTTON_STA) == 0)
                     {
-                        BaseComonentProperty *tmpPro = new CheckImageButtonProperty();
-                        tmpPro->parseJsonData(component);
-                        tmpPro->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                        tmpPro = new CheckImageButtonProperty();
                     }
                     else if(tmp.compare(LED_PROGRESS_BAR_STA) == 0)
                     {
-                        BaseComonentProperty *tmpPro = new LedProgressBarProperty();
-                        tmpPro->parseJsonData(component);
-                        tmpPro->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                        tmpPro = new LedProgressBarProperty();
                     }
                     else if(tmp.compare(LOADING_PROGRESS_BAR_STA) == 0)
                     {
-                        BaseComonentProperty *tmpPro = new LoadingProgressBarProperty();
-                        tmpPro->parseJsonData(component);
-                        tmpPro->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                        tmpPro = new LoadingProgressBarProperty();
                     }
                     else if(tmp.compare(RECT_PROCESS_BAR_STR) == 0)
                     {
-                        BaseComonentProperty *tmpPro = new RectProgressBarProperty();
-                        tmpPro->parseJsonData(component);
-                        tmpPro->fileName = jsonPro.fileName;
-                        jsonPro.vTotalJsonProperty.append(tmpPro);
+                        tmpPro = new RectProgressBarProperty();
                     }
                     else if(tmp.compare(ROUND_RECT_PROGRESS_BAR_STA) == 0)
                     {
-                        BaseComonentProperty *tmpPro = new RoundRectProgressBarProperty();
+                        tmpPro = new RoundRectProgressBarProperty();
+                    }
+                    else if(tmp.compare(ALPHABET_KEYBOARD_STR) == 0)
+                    {
+                        tmpPro = new AlphabetKeyboardProperty();
+                    }
+                    else if(tmp.compare(COMBO_ITEM_STA) == 0)
+                    {
+                        tmpPro = new ComboItemProperty();
+                    }
+                    else if(tmp.compare(NUM_KEYBOARD_STR) == 0)
+                    {
+                        tmpPro = new NumberKeyboardProperty();
+                    }
+                    else if(tmp.compare(WIFI_CUSTOM_BUTTON_STR) == 0)
+                    {
+                        tmpPro = new WifiCustomButtonProperty();
+                    }
+                    else if(tmp.compare(WIFI_ALPHABET_KEYBOAED_STR) == 0)
+                    {
+                        tmpPro = new WifiAlphabetKeyboardProperty();
+                    }
+                    else if(tmp.compare(INFO_CONFIRM_PANEL_STR) == 0)
+                    {
+                        tmpPro = new InfoConfirmPanelProperty();
+                    }
+                    else if(tmp.compare(SOLID_LINE_STR) == 0)
+                    {
+                        tmpPro = new SolidLineProperty();
+                    }
+                    if(tmpPro != NULL)
+                    {
                         tmpPro->parseJsonData(component);
                         tmpPro->fileName = jsonPro.fileName;
                         jsonPro.vTotalJsonProperty.append(tmpPro);

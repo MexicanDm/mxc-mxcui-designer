@@ -4,7 +4,7 @@
 
 class TextEditImageProperty : public BaseComonentProperty{
 public:
-    TextEditImageProperty() : BaseComonentProperty(),text(""),vflags(""),hflags("")
+    TextEditImageProperty() : BaseComonentProperty(),text(""),vflags("AlignBottom"),hflags("AlignLeft")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -38,7 +38,7 @@ public:
         if(!BaseComonentProperty::setData(st)) return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
 
         if(str.compare("text") == 0)
         {
@@ -64,10 +64,10 @@ public:
         BaseComonentProperty::saveJsonData(obj);
         obj.insert("text",text);
 
-        QJsonObject alignmentObj;
-        alignmentObj.insert("horizontal",hflags);
-        alignmentObj.insert("vertical",vflags);
-        obj.insert("alignment",alignmentObj);
+        QStringList list;
+
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        saveJsonStrItem(obj,list);
 
     }
 
@@ -87,27 +87,13 @@ public:
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
 
-        list << "alignment";
-        QTreeWidgetItem *itemAlignment = new QTreeWidgetItem(bigChildItem,list);
-        list.clear();
-        vStrList.clear();
-        list << "horizontal" << hflags;
-        vStrList.append(list);
-        list.clear();
-
-        list << "vertical" << vflags;
-        vStrList.append(list);
-        list.clear();
-
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(itemAlignment,vStrList[k]);
-        }
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        addTreeWidgetStrItem(bigChildItem,list);
     }
 
     void draw(QPainter &painter)
     {
-        texteditImage.setData(x,y,width,height,fontcolor,&baseFont,vflagsMap.value(vflags) | hflagsMap.value(hflags),text);
+        texteditImage.setData(x,y,width,height,fontcolor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags),text);
         texteditImage.draw(painter);
     }
 

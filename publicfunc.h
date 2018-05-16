@@ -15,6 +15,11 @@
 #include "jsonPropertyItem/loadingprogressbarproperty.h"
 #include "jsonPropertyItem/rectprogressbarproperty.h"
 #include "jsonPropertyItem/roundrectprogressbarproperty.h"
+#include "jsonPropertyItem/numberkeyboardproperty.h"
+#include "jsonPropertyItem/wificustombuttonproperty.h"
+#include "jsonPropertyItem/wifialphabetkeyboardproperty.h"
+#include "jsonPropertyItem/infoconfirmpanelproperty.h"
+#include "jsonPropertyItem/solidlineproperty.h"
 
 class JsonProperty{
 public:

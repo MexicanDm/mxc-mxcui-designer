@@ -6,7 +6,7 @@
 class CheckBoxProperty : public BaseComonentProperty
 {
 public:
-    CheckBoxProperty() : BaseComonentProperty(),vflags(""),hflags(""),text("")
+    CheckBoxProperty() : BaseComonentProperty(),vflags("AlignBottom"),hflags("AlignLeft"),text("")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -52,22 +52,8 @@ public:
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
 
-        list << "alignment";
-        QTreeWidgetItem *itemAlignment = new QTreeWidgetItem(bigChildItem,list);
-        list.clear();
-        vStrList.clear();
-        list << "horizontal" << hflags;
-        vStrList.append(list);
-        list.clear();
-
-        list << "vertical" << vflags;
-        vStrList.append(list);
-        list.clear();
-
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(itemAlignment,vStrList[k]);
-        }
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        addTreeWidgetStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
@@ -75,7 +61,7 @@ public:
         if(!BaseComonentProperty::setData(st)) return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
 
         if(str.compare("text") == 0)
         {
@@ -100,10 +86,10 @@ public:
         BaseComonentProperty::saveJsonData(obj);
         obj.insert("text",text);
 
-        QJsonObject alignmentObj;
-        alignmentObj.insert("horizontal",hflags);
-        alignmentObj.insert("vertical",vflags);
-        obj.insert("alignment",alignmentObj);
+        QStringList list;
+
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        saveJsonStrItem(obj,list);
     }
 
     void draw(QPainter &painter)
@@ -113,7 +99,7 @@ public:
         vCheckBox.setTextInfo(fontcolor,&baseFont);
         vCheckBox.setText(text);
         vCheckBox.setTextOffset(0,0);
-        vCheckBox.setTextFlags(vflagsMap.value(vflags) | hflagsMap.value(hflags));
+        vCheckBox.setTextFlags(vflagMap.value(vflags) | hflagMap.value(hflags));
         vCheckBox.draw(painter);
 
     }

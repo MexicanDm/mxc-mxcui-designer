@@ -71,13 +71,12 @@ public:
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
 
-        list << "color";
-        QTreeWidgetItem *itemColor = new QTreeWidgetItem(bigChildItem,list);
-        addColorItem(itemColor,color);
+        list << "color" << "R" << QString("%1").arg(color.red()) << "G" << QString("%1").arg(color.green()) << "B" << QString("%1").arg(color.blue());
+        addTreeWidgetStrItem(bigChildItem,list);
+        list.clear();
 
-        list << "baseColor";
-        QTreeWidgetItem *baseColorItem = new QTreeWidgetItem(bigChildItem,list);
-        addColorItem(baseColorItem,baseColor);
+        list << "baseColor" << "R" << QString("%1").arg(baseColor.red()) << "G" << QString("%1").arg(baseColor.green()) << "B" << QString("%1").arg(baseColor.blue());
+        addTreeWidgetStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
@@ -85,7 +84,7 @@ public:
         if(!BaseComonentProperty::setData(st)) return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
         if(str.compare("penWidth") == 0)
         {
             penWidth = value.toInt();
@@ -124,9 +123,15 @@ public:
         obj.insert("maxValue",maxValue);
         obj.insert("currentValue",currentValue);
 
-        obj.insert("color",saveColorData(color));
+        QStringList list;
 
-        obj.insert("baseColor",saveColorData(baseColor));
+        list << "color" << "R" << QString("%1").arg(color.red()) << "G" << QString("%1").arg(color.green()) << "B" << QString("%1").arg(color.blue());
+        saveJsonStrItem(obj,list);
+        list.clear();
+
+        list << "baseColor" << "R" << QString("%1").arg(baseColor.red()) << "G" << QString("%1").arg(baseColor.green()) << "B" << QString("%1").arg(baseColor.blue());
+        saveJsonStrItem(obj,list);
+
 
         //array.append(obj);
     }

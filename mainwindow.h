@@ -26,16 +26,19 @@ private:
     bool layerSta2;
 
     QList<int> cBtnSta;
+    bool bHV;
 
 signals:
     void sigDisplayJsonProperty();
     void sigLayerSta(QList<int> layerSta);
+    void sigPaintWidgetRect(int w,int h);
 public slots:
     void slotOpenFile();
     void slotSaveFile();
     void slotcBtnSta();
     void slotReadBtnSta();
     void slotClear();
+    void slotBtnHV();
 };
 
 #endif // MAINWINDOW_H

@@ -23,7 +23,7 @@ public:
         if(!BaseComonentProperty::setData(st))return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
 
         if(str.compare("text") == 0)
         {

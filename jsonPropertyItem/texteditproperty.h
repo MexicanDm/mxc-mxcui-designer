@@ -4,7 +4,7 @@
 
 class TextEditProperty : public BaseComonentProperty{
 public:
-    TextEditProperty() : BaseComonentProperty(),text(""),vflags(""),hflags(""),backgroundColor(QColor(255,255,255))
+    TextEditProperty() : BaseComonentProperty(),text(""),vflags("AlignBottom"),hflags("AlignLeft"),backgroundColor(QColor(255,255,255))
     {
 
     }
@@ -34,7 +34,7 @@ public:
             text = iter.value().toString();
         }
 
-        iter = compObj.find("backgroundcolor");
+        iter = compObj.find("backgroundColor");
         if(iter != compObj.end())
         {
 
@@ -48,7 +48,7 @@ public:
         if(!BaseComonentProperty::setData(st)) return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
 
         if(str.compare("text") == 0)
         {
@@ -65,7 +65,7 @@ public:
                 vflags = value;
             }
         }
-        else if(cName.compare("backgroundcolor") == 0)
+        else if(cName.compare("backgroundColor") == 0)
         {
             setColorData(str,backgroundColor,value);
         }
@@ -76,13 +76,15 @@ public:
     {
         BaseComonentProperty::saveJsonData(obj);
         obj.insert("text",text);
+        QStringList list;
 
-        QJsonObject alignmentObj;
-        alignmentObj.insert("horizontal",hflags);
-        alignmentObj.insert("vertical",vflags);
-        obj.insert("alignment",alignmentObj);
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        saveJsonStrItem(obj,list);
+        list.clear();
 
-        obj.insert("color",saveColorData(backgroundColor));
+        list << "backgroundColor" << "R" << QString("%1").arg(backgroundColor.red()) << "G" << QString("%1").arg(backgroundColor.green()) << "B" << QString("%1").arg(backgroundColor.blue());
+        saveJsonStrItem(obj,list);
+
     }
 
     void addTreeWidgetItem(QList<QTreeWidgetItem *> layerList)
@@ -101,31 +103,17 @@ public:
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
 
-        list << "alignment";
-        QTreeWidgetItem *itemAlignment = new QTreeWidgetItem(bigChildItem,list);
-        list.clear();
-        vStrList.clear();
-        list << "horizontal" << hflags;
-        vStrList.append(list);
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        addTreeWidgetStrItem(bigChildItem,list);
         list.clear();
 
-        list << "vertical" << vflags;
-        vStrList.append(list);
-        list.clear();
-
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(itemAlignment,vStrList[k]);
-        }
-
-        list << "backgroundcolor";
-        QTreeWidgetItem *itembgColor = new QTreeWidgetItem(bigChildItem,list);
-        addColorItem(itembgColor,backgroundColor);
+        list << "backgroundColor" << "R" << QString("%1").arg(backgroundColor.red()) << "G" << QString("%1").arg(backgroundColor.green()) << "B" << QString("%1").arg(backgroundColor.blue());
+        addTreeWidgetStrItem(bigChildItem,list);
     }
 
     void draw(QPainter &painter)
     {
-        textedit.setData(x,y,width,height,fontcolor,backgroundColor,&baseFont,vflagsMap.value(vflags) | hflagsMap.value(hflags),text);
+        textedit.setData(x,y,width,height,fontcolor,backgroundColor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags),text);
         textedit.draw(painter);
     }
 

@@ -15,7 +15,7 @@ public:
     explicit TreeWidget(QWidget *parent = 0);
 private:
     QTreeWidgetItem *lastOpen;
-
+    QList<QString> vCpCompareStr;
 
 signals:
     void sigUpdateSta(SearchType sType);

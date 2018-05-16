@@ -61,7 +61,14 @@ HEADERS  += mainwindow.h \
     jsonPropertyItem/ledprogressbarproperty.h \
     jsonPropertyItem/loadingprogressbarproperty.h \
     jsonPropertyItem/roundrectprogressbarproperty.h \
-    jsonPropertyItem/texteditimageproperty.h
+    jsonPropertyItem/texteditimageproperty.h \
+    jsonPropertyItem/numberkeyboardproperty.h \
+    jsonPropertyItem/wificustombuttonproperty.h \
+    jsonPropertyItem/wifialphabetkeyboardproperty.h \
+    jsonPropertyItem/infoconfirmpanelproperty.h \
+    jsonPropertyItem/imagelabelproperty.h \
+    jsonPropertyItem/solidline.h \
+    jsonPropertyItem/solidlineproperty.h
 
 
 FORMS    += mainwindow.ui

@@ -1,11 +1,11 @@
-#ifndef COMBOITEM_H
-#define COMBOITEM_H
+#ifndef WIFICUSTOMBUTTONPROPERTY_H
+#define WIFICUSTOMBUTTONPROPERTY_H
 #include "basecomonentproperty.h"
 
-class ComboItemProperty : public BaseComonentProperty
+class WifiCustomButtonProperty : public BaseComonentProperty
 {
 public:
-    ComboItemProperty() : BaseComonentProperty(),textPos(QPoint(0,0)),text(""),vflags("AlignBottom"),hflags("AlignLeft")
+    WifiCustomButtonProperty() : BaseComonentProperty(),text(""),vflags("AlignBottom"),hflags("AlignLeft")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -31,21 +31,6 @@ public:
         {
             text = iter.value().toString();
         }
-        iter = compObj.find("textPos");
-        if(iter != compObj.end())
-        {
-            QJsonObject alignmentObj = iter.value().toObject();
-            iter = alignmentObj.find("tx");
-            if(iter != alignmentObj.end())
-            {
-                textPos.setX(iter.value().toInt());
-            }
-            iter = alignmentObj.find("ty");
-            if(iter != alignmentObj.end())
-            {
-                textPos.setY(iter.value().toInt());
-            }
-        }
         return true;
     }
 
@@ -69,8 +54,6 @@ public:
         addTreeWidgetStrItem(bigChildItem,list);
         list.clear();
 
-        list << "textPos" << "tx" << QString("%1").arg(textPos.x()) << "ty" << QString("%1").arg(textPos.y());
-        addTreeWidgetStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
@@ -95,17 +78,6 @@ public:
                 vflags = value;
             }
         }
-        else if(cName.compare("textPos") == 0)
-        {
-            if(str.compare("tx") == 0)
-            {
-                textPos.setX(value.toInt());
-            }
-            else if(str.compare("ty") == 0)
-            {
-                textPos.setY(value.toInt());
-            }
-        }
         return true;
     }
 
@@ -115,28 +87,24 @@ public:
         obj.insert("text",text);
 
         QStringList strlist;
-        strlist << "textPos" << "tx" << QString("%1").arg(textPos.x()) << "ty" << QString("%1").arg(textPos.y());
-        saveJsonStrItem(obj,strlist);
-        strlist.clear();
-
         strlist << "alignment" << "horizontal" << hflags << "vertical" << vflags;
         saveJsonStrItem(obj,strlist);
     }
 
     void draw(QPainter &painter)
     {
-        comitem.setData(x,y,width,height);
-        comitem.setText(text);
-        comitem.setTextInfo(textPos.x(),textPos.y(),fontcolor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags));
-        comitem.draw(painter,QPoint(0,0));
+        wificustomBtn.setData(x,y,width,height);
+        wificustomBtn.setText(text);
+        wificustomBtn.setImage(resinActive,resActive);
+        wificustomBtn.setTextInfo(fontcolor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags));
+        wificustomBtn.draw(painter);
     }
-
 public:
-    QPoint textPos;
     QString text;
     QString vflags;
     QString hflags;
-    ComboItem comitem;
+    WifiCustomButton wificustomBtn;
 };
 
-#endif // COMBOITEM_H
+#endif // WIFICUSTOMBUTTONPROPERTY_H
+

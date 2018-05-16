@@ -1,12 +1,12 @@
-#ifndef ALPHABETKEYBOARDPROPERTY_H
-#define ALPHABETKEYBOARDPROPERTY_H
+#ifndef NUMBERKEYBOARDPROPERTY_H
+#define NUMBERKEYBOARDPROPERTY_H
 
 #include "basecomonentproperty.h"
 
-class AlphabetKeyboardProperty : public BaseComonentProperty
+class NumberKeyboardProperty : public BaseComonentProperty
 {
 public:
-    AlphabetKeyboardProperty() : BaseComonentProperty()
+    NumberKeyboardProperty() : BaseComonentProperty()
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -36,14 +36,13 @@ public:
 
     void draw(QPainter &painter)
     {
-        alKeyboard.init(&baseFont);
-        alKeyboard.draw(painter);
+        numKeyboard.init(&baseFont);
+        numKeyboard.draw(painter);
     }
 public:
-    AlphabetKeyboard alKeyboard;
-
+    NumberKeyboard numKeyboard;
 
 };
 
-#endif // ALPHABETKEYBOARDPROPERTY_H
+#endif // NUMBERKEYBOARDPROPERTY_H
 

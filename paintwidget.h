@@ -13,11 +13,14 @@ protected:
     void paintEvent(QPaintEvent *event);
 private:
     QList<int> layerSta;
+    int pw;
+    int ph;
 signals:
 
 public slots:
     void slotSetLayerSta(QList<int> ls);
     void slotUpdateSta(SearchType st);
+    void slotPaintWidgetRect(int w,int h);
 };
 
 #endif // PAINTERWIDGET_H

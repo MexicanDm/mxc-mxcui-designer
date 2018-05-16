@@ -1,12 +1,10 @@
-#ifndef ALPHABETKEYBOARDPROPERTY_H
-#define ALPHABETKEYBOARDPROPERTY_H
-
+#ifndef WIFIALPHABETKEYBOARDPROPERTY_H
+#define WIFIALPHABETKEYBOARDPROPERTY_H
 #include "basecomonentproperty.h"
 
-class AlphabetKeyboardProperty : public BaseComonentProperty
-{
+class WifiAlphabetKeyboardProperty : public BaseComonentProperty{
 public:
-    AlphabetKeyboardProperty() : BaseComonentProperty()
+    WifiAlphabetKeyboardProperty() : BaseComonentProperty()
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -36,14 +34,12 @@ public:
 
     void draw(QPainter &painter)
     {
-        alKeyboard.init(&baseFont);
-        alKeyboard.draw(painter);
+        wifiKeyboard.init(&baseFont);
+        wifiKeyboard.draw(painter);
     }
 public:
-    AlphabetKeyboard alKeyboard;
-
-
+    WifiAlphabetKeyboard wifiKeyboard;
 };
 
-#endif // ALPHABETKEYBOARDPROPERTY_H
+#endif // WIFIALPHABETKEYBOARDPROPERTY_H
 

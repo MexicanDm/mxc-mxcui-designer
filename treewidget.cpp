@@ -14,6 +14,8 @@ TreeWidget::TreeWidget(QWidget *parent) : QTreeWidget(parent)
     QObject::connect(this,SIGNAL(itemSelectionChanged()),this,SLOT(slotSeleteChanged()));
     lastOpen = NULL;
 
+    vCpCompareStr << "R" << "G" << "B" << "vertical" << "horizontal" << "tx" << "ty";
+
 }
 
 void TreeWidget::slotDisplayJsonFile()
@@ -82,16 +84,16 @@ void TreeWidget::slotItemChanged(QTreeWidgetItem* changedItem,int column)
         QTreeWidgetItem* parentItem = changedItem->parent();
         if(parentItem == NULL) return;
         QString pText = changedItem->text(0);
-        if(pText.compare("R") == 0 || pText.compare("G") == 0 || pText.compare("B") == 0
-                || pText.compare("vertical") == 0 || pText.compare("horizontal") == 0)
+        //QString cpname = parentItem->text(0);
+        if(vCpCompareStr.indexOf(pText) != -1)
         {
-            st.parentName = parentItem->text(0);
+            st.cpName = parentItem->text(0);
             parentItem = parentItem->parent();
             pText = parentItem->text(0);
         }
         else
         {
-            st.parentName = "";
+            st.cpName = "";
         }
 
         st.fileName = parentItem->parent()->parent()->text(0);

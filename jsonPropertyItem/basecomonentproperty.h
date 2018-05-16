@@ -23,6 +23,7 @@
 #include "../mxc-mxcui/MXCUI/ui/wificustombutton.h"
 #include "../mxc-mxcui/MXCUI/ui/wifialphabetkeyboard.h"
 #include "../mxc-mxcui/MXCUI/ui/uicomponent.h"
+#include "solidline.h"
 #include <QWidget>
 #include <QFile>
 #include <QJsonParseError>
@@ -34,7 +35,9 @@
 #include <QTreeWidgetItem>
 #include <QCoreApplication>
 #include <QDir>
+#include <limits>
 
+#define INVAILD_DATA (std::numeric_limits<int>::max())
 #define CIRCLE_PROCESS_BAR_STR "CircleProgressBar"
 #define CHECK_BOX_STR "CheckBox"
 #define IMAGE_BUTTON_STR "ImageButton"
@@ -43,17 +46,22 @@
 #define TEXT_EDIT_STR "TextEdit"
 #define TEXT_EDIT_IMAGE_STA "TextEditImage"
 #define CHECK_IMAGE_BUTTON_STA "CheckImageButton"
-//#define COMBO_ITEM_STA "ComboItem"
+#define COMBO_ITEM_STA "ComboItem"
 #define LED_PROGRESS_BAR_STA "LedProgressBar"
 #define LOADING_PROGRESS_BAR_STA "LoadingProgressBar"
 #define RECT_PROCESS_BAR_STR "RectProgressBar"
-#define ROUND_RECT_PROGRESS_BAR_STA "RoundRectProcessBar"
+#define ROUND_RECT_PROGRESS_BAR_STA "RoundRectProgressBar"
+#define NUM_KEYBOARD_STR "NumberKeyboard"
+#define WIFI_CUSTOM_BUTTON_STR "WifiCustomButton"
+#define WIFI_ALPHABET_KEYBOAED_STR "WifiAlphabetKeyboard"
+#define INFO_CONFIRM_PANEL_STR "InfoConfirmPanel"
+#define SOLID_LINE_STR "SolidLine"
 
 typedef struct SearchType_{
     QString fileName;
     QString structName;
     QString structType;
-    QString parentName;
+    QString cpName;
     QTreeWidgetItem item;
 }SearchType;
 
@@ -66,10 +74,14 @@ public:
     virtual void saveJsonData(QJsonObject &obj);
     virtual void initData();
     virtual void draw(QPainter &painter);
+
+
     QColor parseColor(QJsonObject::iterator iter);
-    void addColorItem(QTreeWidgetItem *itembgColor,QColor color);
-    QJsonObject saveColorData(QColor color);
     void setColorData(const QString &str,QColor &color,const QString &value);
+    void addTreeWidgetStrItem(QTreeWidgetItem *childItem, QStringList strlist);
+    void saveJsonStrItem(QJsonObject &obj, QStringList &strlist);
+    QString selectDefaultName(QString name);
+
 public:
     int x;
     int y;
@@ -84,9 +96,11 @@ public:
     QString resinActive;
     QTreeWidgetItem *bigChildItem;
     QString fileName;
-    QMap<QString,int> vflagsMap;
-    QMap<QString,int> hflagsMap;
+    QMap<QString,int> vflagMap;
+    QMap<QString,int> hflagMap;
+    QMap<QString,int> tflagMap;
     QFont baseFont;
+    //int maxInvalidData;
 };
 
 #endif // BASECOMONENTPROPERTY1_H

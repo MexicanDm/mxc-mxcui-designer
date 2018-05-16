@@ -1,15 +1,17 @@
 #include "basecomonentproperty.h"
 
-BaseComonentProperty::BaseComonentProperty():x(0),y(0),width(0),height(0),layer(0),fontSize(0),type(""),name(""),
+BaseComonentProperty::BaseComonentProperty():x(INVAILD_DATA),y(INVAILD_DATA),width(INVAILD_DATA),height(INVAILD_DATA),layer(INVAILD_DATA),fontSize(INVAILD_DATA),type(""),name(""),
     fontcolor(QColor(255,255,255)),resActive(""),resinActive(""),bigChildItem(NULL),fileName("")
 {
-    hflagsMap.insert("AlignHCenter",Qt::AlignHCenter);
-    hflagsMap.insert("AlignLeft",Qt::AlignLeft);
-    hflagsMap.insert("AlignRight",Qt::AlignRight);
-    vflagsMap.insert("AlignBottom",Qt::AlignBottom);
-    vflagsMap.insert("AlignTop",Qt::AlignTop);
-    vflagsMap.insert("AlignVCenter",Qt::AlignVCenter);
+    hflagMap.insert("AlignHCenter",Qt::AlignHCenter);
+    hflagMap.insert("AlignLeft",Qt::AlignLeft);
+    hflagMap.insert("AlignRight",Qt::AlignRight);
+    vflagMap.insert("AlignBottom",Qt::AlignBottom);
+    vflagMap.insert("AlignTop",Qt::AlignTop);
+    vflagMap.insert("AlignVCenter",Qt::AlignVCenter);
+    tflagMap.insert("TextSingleLine",Qt::TextSingleLine);
     baseFont.setFamily("Droid Sans Fallback Regular");
+    //INVAILD_DATA = std::numeric_limits<int>::max();
 }
 bool BaseComonentProperty::parseJsonData(QJsonValue component)
 {
@@ -86,52 +88,65 @@ void BaseComonentProperty::addTreeWidgetItem(QList<QTreeWidgetItem *>layerList)
     {
         return;
     }
-
-    list << "type" << type;
-    vStrList.append(list);
-    list.clear();
-
-    list << "x" << QString("%1").arg(x);
-    vStrList.append(list);
-    list.clear();
-
-    list << "y" << QString("%1").arg(y);
-    vStrList.append(list);
-    list.clear();
-
-    list << "width" << QString("%1").arg(width);
-    vStrList.append(list);
-    list.clear();
-
-    list << "height" << QString("%1").arg(height);
-    vStrList.append(list);
-    list.clear();
+    if(!type.isEmpty())
+    {
+        list << "type" << type;
+        vStrList.append(list);
+        list.clear();
+    }
+    if(x != INVAILD_DATA)
+    {
+        list << "x" << QString("%1").arg(x);
+        vStrList.append(list);
+        list.clear();
+    }
+    if(y != INVAILD_DATA)
+    {
+        list << "y" << QString("%1").arg(y);
+        vStrList.append(list);
+        list.clear();
+    }
+    if(width != INVAILD_DATA)
+    {
+        list << "width" << QString("%1").arg(width);
+        vStrList.append(list);
+        list.clear();
+    }
+    if(height != INVAILD_DATA)
+    {
+        list << "height" << QString("%1").arg(height);
+        vStrList.append(list);
+        list.clear();
+    }
 
 //        list << "layer" << QString("%1").arg(layer);
 //        vStrList.append(list);
 //        list.clear();
-
-    list << "fontsize" << QString("%1").arg(fontSize);
-    vStrList.append(list);
-    list.clear();
-
-    list << "res_active" << resActive;
-    vStrList.append(list);
-    list.clear();
-
-    list << "res_inactive" << resinActive;
-    vStrList.append(list);
-    list.clear();
-
+    if(fontSize != INVAILD_DATA)
+    {
+        list << "fontsize" << QString("%1").arg(fontSize);
+        vStrList.append(list);
+        list.clear();
+    }
+    if(!resActive.isEmpty())
+    {
+        list << "res_active" << resActive;
+        vStrList.append(list);
+        list.clear();
+    }
+    if(!resinActive.isEmpty())
+    {
+        list << "res_inactive" << resinActive;
+        vStrList.append(list);
+        list.clear();
+    }
     for(int k = 0;k < vStrList.count();k++)
     {
         new QTreeWidgetItem(bigChildItem,vStrList[k]);
     }
 
-    list << "fontcolor";
-    QTreeWidgetItem *itemfontColor = new QTreeWidgetItem(bigChildItem,list);
-    addColorItem(itemfontColor,fontcolor);
-    //delete bigChildItem;
+    list << "fontcolor" << "R" << QString("%1").arg(fontcolor.red()) << "G" << QString("%1").arg(fontcolor.green()) << "B" << QString("%1").arg(fontcolor.blue());
+    addTreeWidgetStrItem(bigChildItem,list);
 }
 
 bool BaseComonentProperty::setData(const SearchType &st)
@@ -139,7 +154,7 @@ bool BaseComonentProperty::setData(const SearchType &st)
     if(st.fileName.compare(fileName) != 0 || st.structName.compare(name) != 0) return false;
     QString str = st.item.text(0);
     QString value = st.item.text(1);
-    QString cName = st.parentName;
+    QString cName = st.cpName;
     if(str.compare("x") == 0)
     {
         x = value.toInt();
@@ -193,8 +208,10 @@ void BaseComonentProperty::saveJsonData(QJsonObject &obj)
     obj.insert("res_active",resActive);
     obj.insert("res_inactive",resinActive);
 
-    obj.insert("fontcolor",saveColorData(fontcolor));
-
+    //obj.insert("fontcolor",saveColorData(fontcolor));
+    QStringList strlist;
+    strlist << "fontcolor" << "R" << QString("%1").arg(fontcolor.red()) << "G" << QString("%1").arg(fontcolor.green()) << "B" << QString("%1").arg(fontcolor.blue());
+    saveJsonStrItem(obj,strlist);
     //array.append(obj);
 }
 
@@ -231,38 +248,6 @@ QColor BaseComonentProperty::parseColor(QJsonObject::iterator iter)
     return QColor(r,g,b);
 }
 
-void BaseComonentProperty::addColorItem(QTreeWidgetItem *itembgColor,QColor color)
-{
-    QVector<QStringList> vStrList;
-    QStringList list;
-    list.clear();
-    vStrList.clear();
-    list << "R" << QString("%1").arg(color.red());
-    vStrList.append(list);
-    list.clear();
-
-    list << "G" << QString("%1").arg(color.green());
-    vStrList.append(list);
-    list.clear();
-
-    list << "B" << QString("%1").arg(color.blue());
-    vStrList.append(list);
-    list.clear();
-    for(int k = 0;k < vStrList.count();k++)
-    {
-        new QTreeWidgetItem(itembgColor,vStrList[k]);
-    }
-}
-
-QJsonObject BaseComonentProperty::saveColorData(QColor color)
-{
-    QJsonObject bgColorObj;
-    bgColorObj.insert("red",color.red());
-    bgColorObj.insert("green",color.green());
-    bgColorObj.insert("blue",color.blue());
-    return bgColorObj;
-}
-
 void BaseComonentProperty::setColorData(const QString &str,QColor &color,const QString &value)
 {
     if(str.compare("R") == 0)
@@ -277,4 +262,41 @@ void BaseComonentProperty::setColorData(const QString &str,QColor &color,const Q
     {
         color.setBlue(value.toInt());
     }
+}
+
+void BaseComonentProperty::addTreeWidgetStrItem(QTreeWidgetItem *childItem,QStringList strlist)
+{
+    if(strlist.isEmpty()) return;
+    QVector<QStringList> vStrList;
+    vStrList.clear();
+
+    QTreeWidgetItem *itemlist = new QTreeWidgetItem(childItem,QStringList(strlist.at(0)));
+
+    for(int i = 1;i < strlist.count();i+=2)
+    {
+        QStringList list;
+        list << strlist.at(i) << strlist.at(i+1);
+        vStrList.append(list);
+    }
+
+    for(int k = 0;k < vStrList.count();k++)
+    {
+        new QTreeWidgetItem(itemlist,vStrList[k]);
+    }
+}
+
+void BaseComonentProperty::saveJsonStrItem(QJsonObject &obj,QStringList &strlist)
+{
+    QJsonObject sobj;
+    for(int i = 1;i < strlist.count();i += 2)
+    {
+        sobj.insert(strlist.at(i),strlist.at(i+1));
+    }
+    obj.insert(strlist.at(0),sobj);
+}
+
+QString BaseComonentProperty::selectDefaultName(QString name)
+{
+    if (!name.startsWith(":/")) return name;
+    return ":/cn/" + name.mid(2);
 }

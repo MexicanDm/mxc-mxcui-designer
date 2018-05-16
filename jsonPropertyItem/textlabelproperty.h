@@ -5,7 +5,7 @@
 
 class TextLabelProperty : public BaseComonentProperty{
 public:
-    TextLabelProperty() : BaseComonentProperty(),text(""),vflags(""),hflags("")
+    TextLabelProperty() : BaseComonentProperty(),text(""),vflag(""),hflag(""),tflag("")
     {}
 
     bool parseJsonData(QJsonValue component)
@@ -19,12 +19,17 @@ public:
             iter = alignmentObj.find("horizontal");
             if(iter != alignmentObj.end())
             {
-                hflags = iter.value().toString();
+                hflag = iter.value().toString();
             }
             iter = alignmentObj.find("vertical");
             if(iter != alignmentObj.end())
             {
-                vflags = iter.value().toString();
+                vflag = iter.value().toString();
+            }
+            iter = alignmentObj.find("textflag");
+            if(iter != alignmentObj.end())
+            {
+                tflag = iter.value().toString();
             }
         }
         iter = compObj.find("text");
@@ -50,23 +55,15 @@ public:
         {
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
-
         list << "alignment";
-        QTreeWidgetItem *itemAlignment = new QTreeWidgetItem(bigChildItem,list);
-        list.clear();
-        vStrList.clear();
-        list << "horizontal" << hflags;
-        vStrList.append(list);
-        list.clear();
-
-        list << "vertical" << vflags;
-        vStrList.append(list);
-        list.clear();
-
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(itemAlignment,vStrList[k]);
-        }
+        if(!hflag.isEmpty())
+            list << "horizontal" << hflag;
+        if(!vflag.isEmpty())
+            list << "vertical" << vflag;
+        if(!tflag.isEmpty())
+            list << "textflag" << tflag;
+        if(list.count() > 1)
+            addTreeWidgetStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
@@ -74,7 +71,7 @@ public:
         if(!BaseComonentProperty::setData(st))return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
 
         if(str.compare("text") == 0)
         {
@@ -84,11 +81,15 @@ public:
         {
             if(str.compare("horizontal") == 0)
             {
-                hflags = value;
+                hflag = value;
             }
             else if(str.compare("vertical") == 0)
             {
-                vflags = value;
+                vflag = value;
+            }
+            else if(str.compare("textflag") == 0)
+            {
+                tflag = value;
             }
         }
         return true;
@@ -99,21 +100,30 @@ public:
         BaseComonentProperty::saveJsonData(obj);
         obj.insert("text",text);
 
-        QJsonObject alignmentObj;
-        alignmentObj.insert("horizontal",hflags);
-        alignmentObj.insert("vertical",vflags);
-        obj.insert("alignment",alignmentObj);
+        QStringList strlist;
+
+        strlist << "alignment";
+        if(!hflag.isEmpty())
+            strlist << "horizontal" << hflag;
+        if(!vflag.isEmpty())
+            strlist << "vertical" << vflag;
+        if(!tflag.isEmpty())
+            strlist << "textflag" << tflag;
+        if(strlist.count() > 1)
+            saveJsonStrItem(obj,strlist);
     }
 
     void draw(QPainter &painter)
     {
-        textlab.setData(x,y,width,height,fontcolor,&baseFont,vflagsMap.value(vflags) | hflagsMap.value(hflags),text);
+        textlab.setData(x,y,width,height,fontcolor,&baseFont,vflagMap.value(vflag) | hflagMap.value(hflag),text);
         textlab.draw(painter);
+        textlab.SetLayer(layer);
     }
 public:
     QString text;
-    QString vflags;
-    QString hflags;
+    QString vflag;
+    QString hflag;
+    QString tflag;
     TextLabel textlab;
 };
 

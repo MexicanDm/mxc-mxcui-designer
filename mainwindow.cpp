@@ -17,9 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->cBox2,SIGNAL(clicked(bool)),this,SLOT(slotcBtnSta()));
     QObject::connect(this,SIGNAL(sigLayerSta(QList<int>)),ui->disWidget,SLOT(slotSetLayerSta(QList<int>)));
     QObject::connect(ui->btnClear,SIGNAL(clicked(bool)),this,SLOT(slotClear()));
+    QObject::connect(this,SIGNAL(sigPaintWidgetRect(int,int)),ui->disWidget,SLOT(slotPaintWidgetRect(int,int)));
+    QObject::connect(ui->btn_HV,SIGNAL(clicked(bool)),this,SLOT(slotBtnHV()));
     QTimer::singleShot(500, this, SLOT(slotReadBtnSta()));
-
-
+    bHV = false;
+    QTimer::singleShot(500, this, SLOT(slotBtnHV()));
 }
 
 void MainWindow::slotOpenFile()
@@ -117,6 +119,21 @@ void MainWindow::slotClear()
     jsonPro.clear();
     ui->treeWidget->clear();
     ui->disWidget->update();
+}
+
+void MainWindow::slotBtnHV()
+{
+    if(bHV)
+    {
+        emit sigPaintWidgetRect(600,1024);
+        bHV = false;
+    }
+    else
+    {
+        emit sigPaintWidgetRect(1024,600);
+        bHV = true;
+    }
+
 }
 
 MainWindow::~MainWindow()

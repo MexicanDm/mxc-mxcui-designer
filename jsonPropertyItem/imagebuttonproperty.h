@@ -8,7 +8,7 @@
  */
 class ImageButtonProperty : public BaseComonentProperty{
 public:
-    ImageButtonProperty() : BaseComonentProperty(),color(QColor(255,255,255)),text(""),vflags(""),hflags("")
+    ImageButtonProperty() : BaseComonentProperty(),color(QColor(255,255,255)),text(""),vflags("AlignBottom"),hflags("AlignLeft")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -58,26 +58,12 @@ public:
             new QTreeWidgetItem(bigChildItem,vStrList[k]);
         }
 
-        list << "alignment";
-        QTreeWidgetItem *itemAlignment = new QTreeWidgetItem(bigChildItem,list);
-        list.clear();
-        vStrList.clear();
-        list << "horizontal" << hflags;
-        vStrList.append(list);
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        addTreeWidgetStrItem(bigChildItem,list);
         list.clear();
 
-        list << "vertical" << vflags;
-        vStrList.append(list);
-        list.clear();
-
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(itemAlignment,vStrList[k]);
-        }
-
-        list << "color";
-        QTreeWidgetItem *itemColor = new QTreeWidgetItem(bigChildItem,list);
-        addColorItem(itemColor,color);
+        list << "color" << "R" << QString("%1").arg(color.red()) << "G" << QString("%1").arg(color.green()) << "B" << QString("%1").arg(color.blue());
+        addTreeWidgetStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
@@ -85,7 +71,7 @@ public:
         if(!BaseComonentProperty::setData(st)) return false;
         QString str = st.item.text(0);
         QString value = st.item.text(1);
-        QString cName = st.parentName;
+        QString cName = st.cpName;
 
         if(str.compare("text") == 0)
         {
@@ -115,19 +101,21 @@ public:
 
         obj.insert("text",text);
 
-        obj.insert("color",saveColorData(color));
+        QStringList list;
 
-        QJsonObject alignmentObj;
-        alignmentObj.insert("horizontal",hflags);
-        alignmentObj.insert("vertical",vflags);
-        obj.insert("alignment",alignmentObj);
+        list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
+        saveJsonStrItem(obj,list);
+        list.clear();
+
+        list << "color" << "R" << QString("%1").arg(color.red()) << "G" << QString("%1").arg(color.green()) << "B" << QString("%1").arg(color.blue());
+        saveJsonStrItem(obj,list);
     }
 
     void draw(QPainter &painter)
     {
         imageBtn.setData(x,y,width,height);
         imageBtn.setImage(resinActive,resActive);
-        imageBtn.setTextInfo(fontcolor,&baseFont,vflagsMap.value(vflags) | hflagsMap.value(hflags));
+        imageBtn.setTextInfo(fontcolor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags));
         imageBtn.setText(text);
         imageBtn.draw(painter);
     }

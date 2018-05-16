@@ -1,12 +1,11 @@
-#ifndef ALPHABETKEYBOARDPROPERTY_H
-#define ALPHABETKEYBOARDPROPERTY_H
-
+#ifndef IMAGELABELPROPERTY_H
+#define IMAGELABELPROPERTY_H
 #include "basecomonentproperty.h"
 
-class AlphabetKeyboardProperty : public BaseComonentProperty
+class ImageLabelProperty : public BaseComonentProperty
 {
 public:
-    AlphabetKeyboardProperty() : BaseComonentProperty()
+    ImageLabelProperty() : BaseComonentProperty()
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -34,16 +33,23 @@ public:
 
     }
 
+    void initData()
+    {
+        if(x != INVAILD_DATA && y != INVAILD_DATA && (!resActive.isEmpty()))
+        {
+            imagelabel.setData(selectDefaultName(resActive),x,y);
+            imagelabel.setPos(x,y);
+        }
+    }
+
     void draw(QPainter &painter)
     {
-        alKeyboard.init(&baseFont);
-        alKeyboard.draw(painter);
+        imagelabel.draw(painter);
     }
 public:
-    AlphabetKeyboard alKeyboard;
-
-
+    //QString imageFilePath;
+    ImageLabel imagelabel;
 };
 
-#endif // ALPHABETKEYBOARDPROPERTY_H
+#endif // IMAGELABELPROPERTY_H
 
