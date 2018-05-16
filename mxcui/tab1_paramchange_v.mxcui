@@ -1,0 +1,36 @@
+{
+"components":[
+	{
+	  "name":"tab1ButtonChangeParamOK",
+	  "x":123,
+	  "y":382,
+	  "layer":1,
+	  "width":170,
+	  "height":62
+	},
+	{
+	  "name":"tab1ButtonChangeParamCancel",
+	  "x":308,
+	  "y":382,
+	  "layer":1,
+	  "width":170,
+	  "height":62
+	},
+	{
+	  "name":"tab1ParamValueEdit",
+	  "x":123,
+	  "y":285,
+	  "layer":1,
+	  "width":355,
+	  "height":55
+	},
+	{
+	  "name":"tab1ParamValueBoard",
+	  "x":0,
+	  "y":622,
+	  "layer":1,
+	  "width":600,
+	  "height":401
+	}
+  ]
+}

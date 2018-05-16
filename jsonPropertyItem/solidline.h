@@ -1,7 +1,9 @@
 #ifndef SOLIDLINE_H
 #define SOLIDLINE_H
+
 #include <QPainter>
 #include "/home/raise3d/workspace/mxc-mxcui/MXCUI/ui/uicomponent.h"
+
 
 class SolidLine : public UIComponent
 {

@@ -1,0 +1,38 @@
+{
+"components":[
+	{
+	  "name":"printFinishInfo",
+	  "type":"ImageLabel"
+	  "x":221,
+	  "y":183,
+	  "layer":1,
+	  "width":0,
+	  "height":0,
+	  "res_active":":/1/print-finish-ok"
+	},
+	{
+	  "name":"buttonPrintFinishAdd",
+	  "x":188,
+	  "y":620,
+	  "layer":1,
+	  "width":224,
+	  "height":79
+	},
+	{
+	  "name":"buttonPrintFinishReprint",
+	  "x":188,
+	  "y":739,
+	  "layer":1,
+	  "width":224,
+	  "height":79
+	},
+	{
+	  "name":"buttonPrintFinishDone",
+	  "x":188,
+	  "y":858,
+	  "layer":1,
+	  "width":224,
+	  "height":79
+	}
+  ]
+}
