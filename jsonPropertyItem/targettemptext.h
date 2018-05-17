@@ -7,7 +7,7 @@
 class TargetTempText : public UIComponent
 {
 public:
-    TargetTempText() : UIComponent(UI_CONTROL_CHECKBOX)
+    TargetTempText() : UIComponent()
     {
         pos.setX(0);
         pos.setY(0);

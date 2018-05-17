@@ -2,13 +2,13 @@
 #define SOLIDLINE_H
 
 #include <QPainter>
-#include "/home/raise3d/workspace/mxc-mxcui/MXCUI/ui/uicomponent.h"
+#include "../mxc-mxcui/MXCUI/ui/uicomponent.h"
 
 
 class RealLine : public UIComponent
 {
 public:
-    RealLine() : UIComponent(UI_CONTROL_CHECKBOX)
+    RealLine() : UIComponent()
     {
         pos.setX(0);
         pos.setY(0);

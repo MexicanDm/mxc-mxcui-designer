@@ -17,9 +17,10 @@ public:
 private:
     QTreeWidgetItem *lastOpen;
     QList<QString> vCpCompareStr;
-
+    void updateCheckedSta(SearchType st);
 signals:
     void sigUpdateSta(SearchType sType);
+    void sigUpdateCheckSta(SearchType sType);
     void sigDisplayJsonProperty();
 public slots:
     void slotDisplayJsonFile();

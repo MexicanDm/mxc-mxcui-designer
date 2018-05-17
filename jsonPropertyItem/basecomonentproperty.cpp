@@ -12,7 +12,18 @@ BaseComonentProperty::BaseComonentProperty():x(0),y(0),width(0),height(0),layer(
     vflagMap.insert("AlignVCenter",Qt::AlignVCenter);
     tflagMap.insert("TextSingleLine",Qt::TextSingleLine);
     baseFont.setFamily("Droid Sans Fallback Regular");
-    //INVAILD_DATA = std::numeric_limits<int>::max();
+    baseFont.setPointSize(fontSize);
+    checkStaMap.insert("x",true);
+    checkStaMap.insert("y",true);
+    checkStaMap.insert("width",true);
+    checkStaMap.insert("height",true);
+    checkStaMap.insert("layer",true);
+    checkStaMap.insert("fontsize",true);
+    checkStaMap.insert("res_active",true);
+    checkStaMap.insert("res_inactive",true);
+    checkStaMap.insert("fontcolor",true);
+    checkStaMap.insert("name",true);
+
 }
 bool BaseComonentProperty::parseJsonData(QJsonValue component)
 {
@@ -56,7 +67,6 @@ bool BaseComonentProperty::parseJsonData(QJsonValue component)
     if(iter != compObj.end())
     {
         fontSize = iter.value().toInt();
-        baseFont.setPointSize(fontSize);
     }
     iter = compObj.find("res_active");
     if(iter != compObj.end())
@@ -89,78 +99,38 @@ void BaseComonentProperty::addTreeWidgetItem(QList<QTreeWidgetItem *>layerList)
     {
         return;
     }
-    //if(!type.isEmpty())
-    {
         list << "type" << type;
-        vStrList.append(list);
-        list.clear();
-    }
-    //if(x != INVAILD_DATA)
-    {
         list << "x" << QString("%1").arg(x);
-        vStrList.append(list);
-        list.clear();
-    }
-    //if(y != INVAILD_DATA)
-    {
         list << "y" << QString("%1").arg(y);
-        vStrList.append(list);
-        list.clear();
-    }
-    //if(width != INVAILD_DATA)
-    {
         list << "width" << QString("%1").arg(width);
-        vStrList.append(list);
-        list.clear();
-    }
-    //if(height != INVAILD_DATA)
-    {
         list << "height" << QString("%1").arg(height);
-        vStrList.append(list);
-        list.clear();
-    }
-
 //        list << "layer" << QString("%1").arg(layer);
-//        vStrList.append(list);
-//        list.clear();
-   // if(fontSize != INVAILD_DATA)
-    {
         list << "fontsize" << QString("%1").arg(fontSize) ;
-        vStrList.append(list);
-        list.clear();
-    }
-    //if(!resActive.isEmpty())
-    {
         list << "res_active" << resActive;
-        vStrList.append(list);
-        list.clear();
-    }
-    //if(!resinActive.isEmpty())
-    {
         list << "res_inactive" << resinActive;
-        vStrList.append(list);
-        list.clear();
-    }
-    for(int k = 0;k < vStrList.count();k++)
-    {
-        QTreeWidgetItem *item  = new QTreeWidgetItem();
-        bigChildItem->addChild(item);
-        QCheckBox *cBox = new QCheckBox();
-        cBox->setText(vStrList[k].at(0));
-        cBox->setChecked(true);
-        bigChildItem->treeWidget()->setItemWidget(item,0,cBox);
-        item->setText(1,vStrList[k].at(1));
-    }
-
+    addTreeWidgetStrListItem(bigChildItem,list,true);
+    list.clear();
     list << "fontcolor" << "R" << QString("%1").arg(fontcolor.red()) << "G" << QString("%1").arg(fontcolor.green()) << "B" << QString("%1").arg(fontcolor.blue());
     addTreeWidgetHaveChildStrItem(bigChildItem,list);
 }
 
+ bool BaseComonentProperty::setChechedSta(const SearchType &st)
+ {
+     if(st.fileName.compare(fileName) != 0 || st.structName.compare(name) != 0) return false;
+     QString str = st.item->text(0);
+    bool b = st.item->checkState(0);
+     QString cName = st.cpName;
+
+     checkStaMap[str] = b;
+     checkStaMap[cName] = b;
+     return true;
+ }
+
 bool BaseComonentProperty::setData(const SearchType &st)
 {
     if(st.fileName.compare(fileName) != 0 || st.structName.compare(name) != 0) return false;
-    QString str = st.changeStr;
-    QString value = st.changeValue;
+    QString str = st.item->text(0);
+    QString value = st.item->text(1);
     QString cName = st.cpName;
     if(str.compare("x") == 0)
     {
@@ -204,22 +174,41 @@ bool BaseComonentProperty::setData(const SearchType &st)
 
 void BaseComonentProperty::saveJsonData(QJsonObject &obj)
 {
-    obj.insert("x",x);
-    obj.insert("y",y);
-    obj.insert("width",width);
-    obj.insert("height",height);
-    obj.insert("layer",layer);
-    obj.insert("fontsize",fontSize);
-    obj.insert("type",type);
-    obj.insert("name",name);
-    obj.insert("res_active",resActive);
-    obj.insert("res_inactive",resinActive);
+    if(checkStaMap.value("x"))
+        obj.insert("x",x);
+    if(checkStaMap.value("y"))
+        obj.insert("y",y);
 
-    //obj.insert("fontcolor",saveColorData(fontcolor));
-    QStringList strlist;
-    strlist << "fontcolor" << "R" << QString("%1").arg(fontcolor.red()) << "G" << QString("%1").arg(fontcolor.green()) << "B" << QString("%1").arg(fontcolor.blue());
-    saveJsonStrItem(obj,strlist);
-    //array.append(obj);
+    if(checkStaMap.value("width"))
+        obj.insert("width",width);
+
+    if(checkStaMap.value("height"))
+        obj.insert("height",height);
+
+    if(checkStaMap.value("layer"))
+        obj.insert("layer",layer);
+
+    if(checkStaMap.value("fontsize"))
+        obj.insert("fontsize",fontSize);
+
+    if(checkStaMap.value("type"))
+        obj.insert("type",type);
+
+    if(checkStaMap.value("name"))
+        obj.insert("name",name);
+
+    if(checkStaMap.value("res_active"))
+        obj.insert("res_active",resActive);
+
+    if(checkStaMap.value("res_inactive"))
+        obj.insert("res_inactive",resinActive);
+
+    if(checkStaMap.value("fontcolor"))
+    {
+        QStringList strlist;
+        strlist << "fontcolor" << "R" << QString("%1").arg(fontcolor.red()) << "G" << QString("%1").arg(fontcolor.green()) << "B" << QString("%1").arg(fontcolor.blue());
+        saveJsonStrItem(obj,strlist);
+    }
 }
 
 void BaseComonentProperty::initData()
@@ -278,11 +267,12 @@ void BaseComonentProperty::addTreeWidgetStrListItem(QTreeWidgetItem *childItem, 
     {
         QTreeWidgetItem *item = new QTreeWidgetItem();
         childItem->addChild(item);
-        QCheckBox *cBox = new QCheckBox();
-        cBox->setText(strlist[i]);
-        cBox->setChecked(b);
-        childItem->treeWidget()->setItemWidget(item,0,cBox);
+        item->setText(0,strlist[i]);
         item->setText(1,strlist[i+1]);
+        if(b)
+            item->setCheckState(0,Qt::Checked);
+        else
+             item->setCheckState(0,Qt::Unchecked);
     }
 }
 
@@ -293,7 +283,7 @@ void BaseComonentProperty::addTreeWidgetHaveChildStrItem(QTreeWidgetItem *childI
     QTreeWidgetItem *itemlist = new QTreeWidgetItem();
     childItem->addChild(itemlist);
     itemlist->setText(0,strlist.at(0));
-
+    itemlist->setCheckState(1,Qt::Checked);
     QStringList childList = strlist.mid(1,strlist.length());
     if(strlist.at(0).compare("fontcolor") == 0)
         addTreeWidgetStrListItem(itemlist,childList,true);

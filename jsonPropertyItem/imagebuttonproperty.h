@@ -86,8 +86,8 @@ public:
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.changeStr;
-        QString value = st.changeValue;
+        QString str = st.item->text(0);
+        QString value = st.item->text(1);
         QString cName = st.cpName;
 
         if(str.compare("text") == 0)
@@ -149,7 +149,7 @@ public:
     void draw(QPainter &painter)
     {
         imageBtn.setData(x,y,width,height);
-        imageBtn.SetLayer(layer);
+        //imageBtn.SetLayer(layer);
         imageBtn.setImage(selectDefaultName(resinActive),selectDefaultName(resActive));
         imageBtn.setTextInfo(fontcolor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags));
         imageBtn.setText(QCoreApplication::translate("PaintWidget",text.toLatin1()));

@@ -67,8 +67,7 @@ typedef struct SearchType_{
     QString structName; //bian liang ming
     QString structType;// bian liang lei xing
     QString cpName; //color alignment
-    QString changeStr;
-    QString changeValue;
+    QTreeWidgetItem *item;
 }SearchType;
 
 typedef struct AlignmentFlag_{
@@ -89,6 +88,7 @@ public:
     virtual void addTreeWidgetItem(QList<QTreeWidgetItem *>layerList);
     virtual bool setData(const SearchType &st);
     virtual void saveJsonData(QJsonObject &obj);
+    virtual bool setChechedSta(const SearchType &st);
     virtual void initData();
     virtual void draw(QPainter &painter);
 
@@ -118,6 +118,7 @@ public:
     QMap<QString,int> hflagMap;
     QMap<QString,int> tflagMap;
     QFont baseFont;
+    QMap<QString,bool> checkStaMap;
     //int maxInvalidData;
 };
 

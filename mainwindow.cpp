@@ -19,9 +19,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->btnClear,SIGNAL(clicked(bool)),this,SLOT(slotClear()));
     QObject::connect(this,SIGNAL(sigPaintWidgetRect(int,int)),ui->disWidget,SLOT(slotPaintWidgetRect(int,int)));
     QObject::connect(ui->btn_HV,SIGNAL(clicked(bool)),this,SLOT(slotBtnHV()));
+
     QTimer::singleShot(500, this, SLOT(slotReadBtnSta()));
     bHV = false;
     QTimer::singleShot(500, this, SLOT(slotBtnHV()));
+
 }
 
 void MainWindow::slotOpenFile()
@@ -93,7 +95,7 @@ void MainWindow::slotReadBtnSta()
     emit sigLayerSta(cBtnSta);
 }
 
-
+#if 1
 void MainWindow::slotSaveFile()
 {
     QList<JsonProperty> &jsonPro = PublicFunc::vPublicJsonPro;
@@ -112,7 +114,65 @@ void MainWindow::slotSaveFile()
     }
 
 }
+#endif
+#if 0
+void MainWindow::slotSaveFile()
+{
+    QTreeWidgetItemIterator it(ui->treeWidget);
+    QString sAppPath = QCoreApplication::applicationDirPath();
+    QFile fileW;
+    QJsonDocument doc;
+    QList<QJsonObject> objList;
+    objList.reserve(10);
+    QJsonArray array;
+    int objnum = 0;
+    QTreeWidgetItem *item1 = NULL;
+    QTreeWidgetItem *item2 = NULL;
+    while(*it)
+    {
+        QString leftStr;
+        QCheckBox *cb = (QCheckBox*)ui->treeWidget->itemWidget((*it),0);
+        if(cb == NULL)
+        {
+            leftStr = (*it)->text(0);
+        }
+        else
+        {
+            leftStr = cb->text();
+        }
+        //创建新文件
+        if(leftStr.indexOf(".mxcui") > 0)
+        {
+            fileW.close();
+            //mainObj.remove("components");
+            objList.clear();
+            QString filePath = sAppPath + "/json/" + leftStr;
+            if(!PublicFunc::confirmFile(filePath)) return ;
+            fileW.setFileName(filePath);
+            if(!fileW.open(QIODevice::WriteOnly))
+            {
+                qDebug() << QString("[MXCUI] open file %1 failed!").arg(filePath);
+                return ;
+            }
+            continue;
+        }
+        if(cb == NULL)
+        {
+            objList[objnum++].insert(leftStr,objList[objnum]);
+        }
+        else
+        {
+            objList[objnum]
+        }
 
+
+        qDebug() << (*it)->text(0);
+        it++;
+    }
+    //mainObj.insert("components",array);
+    //doc.setObject(mainObj);
+}
+#endif
 void MainWindow::slotClear()
 {
     QList<JsonProperty> &jsonPro = PublicFunc::vPublicJsonPro;

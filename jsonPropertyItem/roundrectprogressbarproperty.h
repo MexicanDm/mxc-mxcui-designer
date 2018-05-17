@@ -47,8 +47,8 @@ public :
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.changeStr;
-        QString value = st.changeValue;
+        QString str = st.item->text(0);
+        QString value = st.item->text(1);
         QString cName = st.cpName;
         if(str.compare("minValue") == 0)
         {

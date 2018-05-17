@@ -37,7 +37,7 @@ public:
     void draw(QPainter &painter)
     {
         numKeyboard.init(&baseFont);
-        numKeyboard.SetLayer(layer);
+        //numKeyboard.SetLayer(layer);
         numKeyboard.setData(x,y,width,height);
         numKeyboard.draw(painter);
     }
