@@ -5,7 +5,7 @@
 class CircleProBarProperty : public BaseComonentProperty{
 public:
     CircleProBarProperty():BaseComonentProperty(),color(QColor(255,255,255)),baseColor(QColor(255,255,255)),
-        penWidth(0),minValue(0),maxValue(0),currentValue(0)
+        penWidth(6),minValue(0),maxValue(0),currentValue(0)
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -48,42 +48,31 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
         list << "penWidth" << QString("%1").arg(penWidth);
-        vStrList.append(list);
-        list.clear();
 
         list << "minValue" << QString("%1").arg(minValue);
-        vStrList.append(list);
-        list.clear();
 
         list << "maxValue" << QString("%1").arg(maxValue);
-        vStrList.append(list);
-        list.clear();
 
         list << "currentValue" << QString("%1").arg(currentValue);
-        vStrList.append(list);
+
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
-
         list << "color" << "R" << QString("%1").arg(color.red()) << "G" << QString("%1").arg(color.green()) << "B" << QString("%1").arg(color.blue());
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
         list.clear();
 
         list << "baseColor" << "R" << QString("%1").arg(baseColor.red()) << "G" << QString("%1").arg(baseColor.green()) << "B" << QString("%1").arg(baseColor.blue());
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
+        QString str = st.changeStr;
+        QString value = st.changeValue;
         QString cName = st.cpName;
         if(str.compare("penWidth") == 0)
         {

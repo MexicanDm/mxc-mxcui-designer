@@ -1,35 +1,39 @@
-#ifndef TEXTLABELPROPERTY_H
-#define TEXTLABELPROPERTY_H
-
+#ifndef TEMPTEXTPROPERTY_H
+#define TEMPTEXTPROPERTY_H
 #include "basecomonentproperty.h"
 
-class TextLabelProperty : public BaseComonentProperty{
+class TargetTempTextProperty : public BaseComonentProperty{
 public:
-    TextLabelProperty() : BaseComonentProperty(),text(""),vflag(""),hflag(""),tflag("")
-    {}
+    TargetTempTextProperty() : BaseComonentProperty(),text("")
+    {
+        aflag.hflag = "AlignHCenter";
+        aflag.vflag = "AlignTop";
+        aflag.tflag = "";
+    }
 
     bool parseJsonData(QJsonValue component)
     {
         if(!BaseComonentProperty::parseJsonData(component)) return false;
         QJsonObject compObj = component.toObject();
         QJsonObject::iterator iter = compObj.find("alignment");
+
         if(iter != compObj.end())
         {
             QJsonObject alignmentObj = iter.value().toObject();
             iter = alignmentObj.find("horizontal");
             if(iter != alignmentObj.end())
             {
-                hflag = iter.value().toString();
+                aflag.hflag = iter.value().toString();
             }
             iter = alignmentObj.find("vertical");
             if(iter != alignmentObj.end())
             {
-                vflag = iter.value().toString();
+                aflag.vflag = iter.value().toString();
             }
             iter = alignmentObj.find("textflag");
             if(iter != alignmentObj.end())
             {
-                tflag = iter.value().toString();
+                aflag.tflag = iter.value().toString();
             }
         }
         iter = compObj.find("text");
@@ -40,7 +44,7 @@ public:
         return true;
     }
 
-    void addTreeWidgetItem(QList<QTreeWidgetItem *> layerList)
+    void addTreeWidgetItem(QList<QTreeWidgetItem *>layerList)
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
@@ -50,13 +54,15 @@ public:
         addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        list << "alignment" << "horizontal" << hflag << "vertical" << vflag << "textflag" << tflag;
+        list << "alignment" << "horizontal" << aflag.hflag << "vertical" << aflag.vflag << "textflag" << aflag.tflag;
         addTreeWidgetHaveChildStrItem(bigChildItem,list);
+        list.clear();
+
     }
 
     bool setData(const SearchType &st)
     {
-        if(!BaseComonentProperty::setData(st))return false;
+        if(!BaseComonentProperty::setData(st)) return false;
         QString str = st.changeStr;
         QString value = st.changeValue;
         QString cName = st.cpName;
@@ -69,15 +75,15 @@ public:
         {
             if(str.compare("horizontal") == 0)
             {
-                hflag = value;
+                aflag.hflag = value;
             }
             else if(str.compare("vertical") == 0)
             {
-                vflag = value;
+                aflag.vflag = value;
             }
             else if(str.compare("textflag") == 0)
             {
-                tflag = value;
+                aflag.tflag = value;
             }
         }
         return true;
@@ -86,27 +92,30 @@ public:
     void saveJsonData(QJsonObject &obj)
     {
         BaseComonentProperty::saveJsonData(obj);
+
         obj.insert("text",text);
 
-        QStringList strlist;
+        QStringList list;
 
-        strlist << "alignment" << "horizontal" << hflag << "vertical" << vflag << "textflag" << tflag;
-        saveJsonStrItem(obj,strlist);
+        list << "alignment" << "horizontal" << aflag.hflag << "vertical" << aflag.vflag << "textflag" << aflag.tflag;
+        saveJsonStrItem(obj,list);
+        list.clear();
+
     }
 
     void draw(QPainter &painter)
     {
-        textlab.setData(x,y,width,height,fontcolor,&baseFont,vflagMap.value(vflag) | hflagMap.value(hflag),text);
-        textlab.draw(painter);
-        //textlab.SetLayer(layer);
+        temptext.setData(x,y,width,height,vflagMap.value(aflag.vflag) | hflagMap.value(aflag.hflag) | tflagMap.value(aflag.tflag),text);
+        painter.setFont(baseFont);
+        painter.setPen(fontcolor);
+        painter.setBrush(fontcolor);
+        temptext.draw(painter);
     }
 public:
     QString text;
-    QString vflag;
-    QString hflag;
-    QString tflag;
-    TextLabel textlab;
+    AlignmentFlag aflag;
+    TargetTempText temptext;
 };
 
-#endif // TEXTLABELPROPERTY_H
+#endif // TEMPTEXTPROPERTY_H
 

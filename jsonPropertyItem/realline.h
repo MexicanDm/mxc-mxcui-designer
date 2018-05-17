@@ -5,10 +5,10 @@
 #include "/home/raise3d/workspace/mxc-mxcui/MXCUI/ui/uicomponent.h"
 
 
-class SolidLine : public UIComponent
+class RealLine : public UIComponent
 {
 public:
-    SolidLine() : UIComponent(UI_CONTROL_CHECKBOX)
+    RealLine() : UIComponent(UI_CONTROL_CHECKBOX)
     {
         pos.setX(0);
         pos.setY(0);
@@ -27,6 +27,30 @@ public:
     void draw(QPainter& painter)
     {
         painter.drawLine(pos, QPoint(pos.x() + width, pos.y()));
+    }
+
+    void setVisible(bool flag)
+    {
+        Q_UNUSED(flag);
+    }
+
+    bool isVisible() const
+    {
+        return false;
+    }
+
+    void baseDraw(QPainter& painter)
+    {
+        Q_UNUSED(painter);
+    }
+
+    bool isComponentPressed() const
+    {
+        return false;
+    }
+    void clearPressed()
+    {
+
     }
 
 public:

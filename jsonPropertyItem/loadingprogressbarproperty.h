@@ -34,8 +34,8 @@ public:
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
+        QString str = st.changeStr;
+        QString value = st.changeValue;
         QString cName = st.cpName;
         if(str.compare("currentValue") == 0)
         {
@@ -56,24 +56,18 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
 
         list << "currentValue" << QString("%1").arg(currentValue);
-        vStrList.append(list);
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
-
         list << "color" << "R" << QString("%1").arg(color.red()) << "G" << QString("%1").arg(color.green()) << "B" << QString("%1").arg(color.blue());
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
         list.clear();
 
         list << "baseColor" << "R" << QString("%1").arg(baseColor.red()) << "G" << QString("%1").arg(baseColor.green()) << "B" << QString("%1").arg(baseColor.blue());
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
     }
 
     void saveJsonData(QJsonObject &obj)

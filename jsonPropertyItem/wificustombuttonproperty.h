@@ -5,7 +5,7 @@
 class WifiCustomButtonProperty : public BaseComonentProperty
 {
 public:
-    WifiCustomButtonProperty() : BaseComonentProperty(),text(""),vflags("AlignBottom"),hflags("AlignLeft")
+    WifiCustomButtonProperty() : BaseComonentProperty(),text(""),vflags("AlignVCenter"),hflags("AlignHCenter")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -38,20 +38,14 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
 
         list << "text" << text;
-        vStrList.append(list);
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
-
         list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
         list.clear();
 
     }
@@ -59,8 +53,8 @@ public:
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st))return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
+        QString str = st.changeStr;
+        QString value = st.changeValue;
         QString cName = st.cpName;
 
         if(str.compare("text") == 0)
@@ -95,7 +89,7 @@ public:
     {
         wificustomBtn.setData(x,y,width,height);
         wificustomBtn.setText(text);
-        wificustomBtn.setImage(resinActive,resActive);
+        wificustomBtn.setImage(selectDefaultName(resinActive),selectDefaultName(resActive));
         wificustomBtn.setTextInfo(fontcolor,&baseFont,vflagMap.value(vflags) | hflagMap.value(hflags));
         wificustomBtn.draw(painter);
     }

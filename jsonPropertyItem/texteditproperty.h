@@ -4,7 +4,7 @@
 
 class TextEditProperty : public BaseComonentProperty{
 public:
-    TextEditProperty() : BaseComonentProperty(),text(""),vflags("AlignBottom"),hflags("AlignLeft"),backgroundColor(QColor(255,255,255))
+    TextEditProperty() : BaseComonentProperty(),text(""),vflags("AlignVCenter"),hflags("AlignHCenter"),backgroundColor(QColor(255,255,255))
     {
 
     }
@@ -46,8 +46,8 @@ public:
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
+        QString str = st.changeStr;
+        QString value = st.changeValue;
         QString cName = st.cpName;
 
         if(str.compare("text") == 0)
@@ -91,24 +91,19 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
 
         list << "text" << text;
-        vStrList.append(list);
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
 
         list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
         list.clear();
 
         list << "backgroundColor" << "R" << QString("%1").arg(backgroundColor.red()) << "G" << QString("%1").arg(backgroundColor.green()) << "B" << QString("%1").arg(backgroundColor.blue());
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
     }
 
     void draw(QPainter &painter)

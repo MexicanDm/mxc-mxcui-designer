@@ -4,7 +4,7 @@
 
 class TextEditImageProperty : public BaseComonentProperty{
 public:
-    TextEditImageProperty() : BaseComonentProperty(),text(""),vflags("AlignBottom"),hflags("AlignLeft")
+    TextEditImageProperty() : BaseComonentProperty(),text(""),vflags("AlignVCenter"),hflags("AlignHCenter")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -36,8 +36,8 @@ public:
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
+        QString str = st.changeStr;
+        QString value = st.changeValue;
         QString cName = st.cpName;
 
         if(str.compare("text") == 0)
@@ -75,20 +75,14 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
 
         list << "text" << text;
-        vStrList.append(list);
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
-
         list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
     }
 
     void draw(QPainter &painter)

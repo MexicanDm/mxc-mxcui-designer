@@ -1,10 +1,10 @@
 #ifndef SOLIDLINEPROPERTY_H
 #define SOLIDLINEPROPERTY_H
 #include "basecomonentproperty.h"
-class SolidLineProperty : public BaseComonentProperty
+class RealLineProperty : public BaseComonentProperty
 {
 public:
-    SolidLineProperty() : BaseComonentProperty()
+    RealLineProperty() : BaseComonentProperty()
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -38,7 +38,7 @@ public:
         sl.draw(painter);
     }
 public:
-    MySolidLine sl;
+    RealLine sl;
 };
 
 #endif // SOLIDLINEPROPERTY_H

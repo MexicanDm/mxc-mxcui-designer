@@ -1,13 +1,13 @@
-#ifndef NUMBERKEYBOARDPROPERTY_H
-#define NUMBERKEYBOARDPROPERTY_H
-
+#ifndef LISTITEMPROPERTY_H
+#define LISTITEMPROPERTY_H
 #include "basecomonentproperty.h"
-
-class NumberKeyboardProperty : public BaseComonentProperty
+class ListItemProperty : public BaseComonentProperty
 {
 public:
-    NumberKeyboardProperty() : BaseComonentProperty()
-    {}
+    ListItemProperty(QPoint parentPos) : BaseComonentProperty()
+    {
+        parentPosition = parentPos;
+    }
     bool parseJsonData(QJsonValue component)
     {
         if(!BaseComonentProperty::parseJsonData(component)) return false;
@@ -36,15 +36,14 @@ public:
 
     void draw(QPainter &painter)
     {
-        numKeyboard.init(&baseFont);
-        numKeyboard.SetLayer(layer);
-        numKeyboard.setData(x,y,width,height);
-        numKeyboard.draw(painter);
+        listitem.setData(x,y,width,height);
+        listitem.setImage(selectDefaultName(resinActive),selectDefaultName(resActive));
+        listitem.draw(painter,parentPosition);
     }
 public:
-    NumberKeyboard numKeyboard;
-
+    QPoint parentPosition;
+    ListItem listitem;
 };
 
-#endif // NUMBERKEYBOARDPROPERTY_H
+#endif // LISTITEMPROPERTY_H
 

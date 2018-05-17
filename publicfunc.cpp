@@ -23,6 +23,8 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
     fileR.close();
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(data, &error);
+
+    QPoint listItemParentPos(0,0);
     if (error.error == QJsonParseError::NoError)
     {
         QJsonObject obj = doc.object();
@@ -105,9 +107,32 @@ bool PublicFunc::readUIFile(QString path, JsonProperty &jsonPro)
                     {
                         tmpPro = new InfoConfirmPanelProperty();
                     }
-                    else if(tmp.compare(My_SOLID_LINE_STR) == 0)
+                    else if(tmp.compare(REAL_LINE_STR) == 0)
                     {
-                        tmpPro = new SolidLineProperty();
+                        tmpPro = new RealLineProperty();
+                    }
+                    else if(tmp.compare(TARGET_TEMP_TEXT_STR) == 0)
+                    {
+                        tmpPro = new TargetTempTextProperty();
+                    }
+                    else if(tmp.compare(LIST_BOX_STR) == 0)
+                    {
+                        iter = compObj.find("x");
+                        if(iter != compObj.end())
+                        {
+                            listItemParentPos.setX(iter.value().toInt());
+                        }
+                        iter = compObj.find("y");
+                        if(iter != compObj.end())
+                        {
+                            listItemParentPos.setY(iter.value().toInt());
+                        }
+                        tmpPro = new ListBoxProperty();
+
+                    }
+                    else if(tmp.compare(LIST_ITEM_STR) == 0)
+                    {
+                        tmpPro = new ListItemProperty(listItemParentPos);
                     }
                     if(tmpPro != NULL)
                     {

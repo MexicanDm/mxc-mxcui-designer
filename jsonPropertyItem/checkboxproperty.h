@@ -6,7 +6,7 @@
 class CheckBoxProperty : public BaseComonentProperty
 {
 public:
-    CheckBoxProperty() : BaseComonentProperty(),vflags("AlignBottom"),hflags("AlignLeft"),text("")
+    CheckBoxProperty() : BaseComonentProperty(),vflags("AlignVCenter"),hflags("AlignHCenter"),text("")
     {}
     bool parseJsonData(QJsonValue component)
     {
@@ -40,27 +40,21 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
 
         list << "text" << text;
-        vStrList.append(list);
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
-
         list << "alignment" << "horizontal" << hflags << "vertical" << vflags;
-        addTreeWidgetStrItem(bigChildItem,list);
+        addTreeWidgetHaveChildStrItem(bigChildItem,list);
     }
 
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st)) return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
+        QString str = st.changeStr;
+        QString value = st.changeValue;
         QString cName = st.cpName;
 
         if(str.compare("text") == 0)
@@ -95,7 +89,7 @@ public:
     void draw(QPainter &painter)
     {
         vCheckBox.setData(x,y,width,height);
-        vCheckBox.setImage(resinActive,resActive);
+        vCheckBox.setImage(selectDefaultName(resinActive),selectDefaultName(resActive));
         vCheckBox.setTextInfo(fontcolor,&baseFont);
         vCheckBox.setText(text);
         vCheckBox.setTextOffset(0,0);

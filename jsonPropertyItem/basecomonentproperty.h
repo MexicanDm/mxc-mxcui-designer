@@ -23,7 +23,8 @@
 #include "../mxc-mxcui/MXCUI/ui/wificustombutton.h"
 #include "../mxc-mxcui/MXCUI/ui/wifialphabetkeyboard.h"
 #include "../mxc-mxcui/MXCUI/ui/uicomponent.h"
-#include "../mxc-mxcui/MXCUI/ui/mysolidline.h"
+#include "realline.h"
+#include "targettemptext.h"
 #include <QWidget>
 #include <QFile>
 #include <QJsonParseError>
@@ -36,6 +37,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <limits>
+#include <QCheckBox>
 
 #define INVAILD_DATA (std::numeric_limits<int>::max())
 #define CIRCLE_PROCESS_BAR_STR "CircleProgressBar"
@@ -55,15 +57,30 @@
 #define WIFI_CUSTOM_BUTTON_STR "WifiCustomButton"
 #define WIFI_ALPHABET_KEYBOAED_STR "WifiAlphabetKeyboard"
 #define INFO_CONFIRM_PANEL_STR "InfoConfirmPanel"
-#define My_SOLID_LINE_STR "MySolidLine"
+#define REAL_LINE_STR "RealLine"
+#define TARGET_TEMP_TEXT_STR "TargetTempText"
+#define LIST_BOX_STR "ListBox"
+#define LIST_ITEM_STR "ListItem"
 
 typedef struct SearchType_{
-    QString fileName;
-    QString structName;
-    QString structType;
-    QString cpName;
-    QTreeWidgetItem *item;
+    QString fileName; //wen jian
+    QString structName; //bian liang ming
+    QString structType;// bian liang lei xing
+    QString cpName; //color alignment
+    QString changeStr;
+    QString changeValue;
 }SearchType;
+
+typedef struct AlignmentFlag_{
+    QString vflag;
+    QString hflag;
+    QString tflag;
+}AlignmentFlag;
+
+typedef struct {
+    QColor activeColor;
+    QColor inactiveColor;
+}TextSwitchColor;
 
 class BaseComonentProperty{
 public:
@@ -78,7 +95,8 @@ public:
 
     QColor parseColor(QJsonObject::iterator iter);
     void setColorData(const QString &str,QColor &color,const QString &value);
-    void addTreeWidgetStrItem(QTreeWidgetItem *childItem, QStringList strlist);
+    void addTreeWidgetHaveChildStrItem(QTreeWidgetItem *childItem, QStringList strlist);
+    void addTreeWidgetStrListItem(QTreeWidgetItem *childItem, QStringList strlist,bool b);
     void saveJsonStrItem(QJsonObject &obj, QStringList &strlist);
     QString selectDefaultName(QString name);
 

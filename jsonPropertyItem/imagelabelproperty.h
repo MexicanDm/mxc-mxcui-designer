@@ -44,6 +44,8 @@ public:
 
     void draw(QPainter &painter)
     {
+        imagelabel.setData(selectDefaultName(resActive),x,y);
+        //imagelabel.setPos(x,y);
         imagelabel.draw(painter);
     }
 public:

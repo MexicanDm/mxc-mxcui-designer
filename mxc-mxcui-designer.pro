@@ -67,9 +67,13 @@ HEADERS  += mainwindow.h \
     jsonPropertyItem/wifialphabetkeyboardproperty.h \
     jsonPropertyItem/infoconfirmpanelproperty.h \
     jsonPropertyItem/imagelabelproperty.h \
-    jsonPropertyItem/solidline.h \
-    jsonPropertyItem/solidlineproperty.h \
-    ../mxc-mxcui/MXCUI/ui/mysolidline.h
+    ../mxc-mxcui/MXCUI/ui/mysolidline.h \
+    jsonPropertyItem/realline.h \
+    jsonPropertyItem/reallineproperty.h \
+    jsonPropertyItem/targettemptext.h \
+    jsonPropertyItem/targettemptextproperty.h \
+    jsonPropertyItem/listboxproperty.h \
+    jsonPropertyItem/listitemproperty.h
 
 
 FORMS    += mainwindow.ui

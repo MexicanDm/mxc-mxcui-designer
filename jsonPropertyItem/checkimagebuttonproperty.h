@@ -21,9 +21,8 @@ public:
     bool setData(const SearchType &st)
     {
         if(!BaseComonentProperty::setData(st))return false;
-        QString str = st.item->text(0);
-        QString value = st.item->text(1);
-        QString cName = st.cpName;
+        QString str = st.changeStr;
+        QString value = st.changeValue;
 
         if(str.compare("text") == 0)
         {
@@ -36,24 +35,23 @@ public:
     {
         BaseComonentProperty::addTreeWidgetItem(layerList);
         if(bigChildItem == NULL) return ;
-        QVector<QStringList> vStrList;
         QStringList list;
 
         list << "text" << text;
-        vStrList.append(list);
+        addTreeWidgetStrListItem(bigChildItem,list,false);
         list.clear();
 
-        for(int k = 0;k < vStrList.count();k++)
-        {
-            new QTreeWidgetItem(bigChildItem,vStrList[k]);
-        }
     }
 
     void draw(QPainter &painter)
     {
         checkImageBtn.setData(x,y,width,height);
         checkImageBtn.setText(text);
+        checkImageBtn.setCheckOffImage(selectDefaultName(resinActive),selectDefaultName(resActive));
+        checkImageBtn.setCheckOnImage(selectDefaultName(resinActive),selectDefaultName(resActive));
+        checkImageBtn.setChecked(true);
         checkImageBtn.draw(painter);
+
     }
 
     void saveJsonData(QJsonObject &obj)

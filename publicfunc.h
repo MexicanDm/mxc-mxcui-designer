@@ -19,7 +19,10 @@
 #include "jsonPropertyItem/wificustombuttonproperty.h"
 #include "jsonPropertyItem/wifialphabetkeyboardproperty.h"
 #include "jsonPropertyItem/infoconfirmpanelproperty.h"
-#include "jsonPropertyItem/solidlineproperty.h"
+#include "jsonPropertyItem/reallineproperty.h"
+#include "jsonPropertyItem/targettemptextproperty.h"
+#include "jsonPropertyItem/listitemproperty.h"
+#include "jsonPropertyItem/listboxproperty.h"
 
 class JsonProperty{
 public:
